@@ -1,7 +1,10 @@
 <template>
-  <div class="character-container" :style="{backgroundColor: color}">
-    <character-selection/>
-    <character-stat-overview/>
+  <div
+    class="character-container"
+    :style="{backgroundColor: color}"
+  >
+    <character-selection />
+    <character-stat-overview />
   </div>
 </template>
 

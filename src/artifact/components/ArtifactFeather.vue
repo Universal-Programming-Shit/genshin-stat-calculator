@@ -1,8 +1,8 @@
 <template>
   <ArtifactSelection
-      :type="ArtifactType.FEATHER"
-      :available-main-stats="[Stats.ATTACK_FLAT]"
-      :available-sub-stats="substats"
+    :type="ArtifactType.FEATHER"
+    :available-main-stats="[Stats.ATTACK_FLAT]"
+    :available-sub-stats="substats"
   />
 </template>
 

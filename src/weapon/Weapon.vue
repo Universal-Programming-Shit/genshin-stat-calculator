@@ -1,7 +1,7 @@
 <template>
   <div class="weapon-container">
-    <WeaponSelection/>
-    <WeaponStatOverview/>
+    <WeaponSelection />
+    <WeaponStatOverview />
   </div>
 </template>
 

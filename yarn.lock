@@ -958,17 +958,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:^8.4.0":
-  version: 8.4.0
-  resolution: "eslint-config-prettier@npm:8.4.0"
-  peerDependencies:
-    eslint: ">=7.0.0"
-  bin:
-    eslint-config-prettier: bin/cli.js
-  checksum: ee8dc343f1fed15dc0658e190a966cc23644477f2331a7f56ae2bb79dd74892e3cde8ea5c142e7a3329a8291a1de041e13ca96e54d0c85ff4a2aba13390c5f10
-  languageName: node
-  linkType: hard
-
 "eslint-plugin-vue@npm:^8.5.0":
   version: 8.5.0
   resolution: "eslint-plugin-vue@npm:8.5.0"
@@ -1284,13 +1273,12 @@ __metadata:
     "@vue/compiler-sfc": ^3.2.31
     "@vueuse/core": ^7.7.0
     eslint: ^8.10.0
-    eslint-config-prettier: ^8.4.0
     eslint-plugin-vue: ^8.5.0
     pinia: ^2.0.11
-    prettier: ^2.5.1
     typescript: ^4.6.2
     vite: ^2.8.5
     vue: ^3.2.31
+    vue-eslint-parser: ^8.3.0
   languageName: unknown
   linkType: soft
 
@@ -1950,15 +1938,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.5.1":
-  version: 2.5.1
-  resolution: "prettier@npm:2.5.1"
-  bin:
-    prettier: bin-prettier.js
-  checksum: 21b9408476ea1c544b0e45d51ceb94a84789ff92095abb710942d780c862d0daebdb29972d47f6b4d0f7ebbfb0ffbf56cc2cfa3e3e9d1cca54864af185b15b66
-  languageName: node
-  linkType: hard
-
 "promise-inflight@npm:^1.0.1":
   version: 1.0.1
   resolution: "promise-inflight@npm:1.0.1"
@@ -2438,7 +2417,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-eslint-parser@npm:^8.0.1":
+"vue-eslint-parser@npm:^8.0.1, vue-eslint-parser@npm:^8.3.0":
   version: 8.3.0
   resolution: "vue-eslint-parser@npm:8.3.0"
   dependencies:

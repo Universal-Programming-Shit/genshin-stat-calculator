@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, ref} from "vue";
+import {computed} from "vue";
 import {useWeaponStore} from "../WeaponStore";
 
 const weaponStore = useWeaponStore();
@@ -15,10 +15,11 @@ const selectWeapon = (i: number) => weaponStore.selectWeapon(i);
   <div class="weapon-selection">
     <select>
       <option
-          v-for="(weapon, i) in weapons"
-          :value="weapon"
-          @click="selectWeapon(i)"
-          :selected="useWeaponStore().selectedWeaponIndex === i"
+        v-for="(weapon, i) in weapons"
+        :key="i"
+        :value="weapon"
+        :selected="useWeaponStore().selectedWeaponIndex === i"
+        @click="selectWeapon(i)"
       >
         {{ weapon.name }}
       </option>
@@ -26,10 +27,11 @@ const selectWeapon = (i: number) => weaponStore.selectWeapon(i);
 
     <select>
       <option
-          v-for="(stats, i) in weaponStats"
-          :value="stats"
-          :selected="useWeaponStore().selectedStatIndex === i"
-          @click="selectStats(i)"
+        v-for="(stats, i) in weaponStats"
+        :key="i"
+        :value="stats"
+        :selected="useWeaponStore().selectedStatIndex === i"
+        @click="selectStats(i)"
       >
         {{ `${stats.level}/${stats.level === 1 ? 20 : stats.level}` }}
       </option>

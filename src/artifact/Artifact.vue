@@ -1,18 +1,18 @@
 <template>
   <div class="artifact-container">
-    <ArtifactFlower/>
+    <ArtifactFlower />
   </div>
   <div class="artifact-container">
-    <ArtifactFeather/>
+    <ArtifactFeather />
   </div>
   <div class="artifact-container">
-    <ArtifactSands/>
+    <ArtifactSands />
   </div>
   <div class="artifact-container">
-    <ArtifactGoblet/>
+    <ArtifactGoblet />
   </div>
   <div class="artifact-container">
-    <ArtifactCirclet/>
+    <ArtifactCirclet />
   </div>
 </template>
 
