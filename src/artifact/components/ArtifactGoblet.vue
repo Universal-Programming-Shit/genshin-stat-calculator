@@ -1,8 +1,8 @@
 <template>
   <ArtifactSelection
-      :type="ArtifactType.GOBLET"
-      :available-main-stats="mainstats"
-      :available-sub-stats="substats"
+    :type="ArtifactType.GOBLET"
+    :available-main-stats="mainstats"
+    :available-sub-stats="substats"
   />
 </template>
 

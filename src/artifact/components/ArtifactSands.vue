@@ -1,8 +1,8 @@
 <template>
   <ArtifactSelection
-      :type="ArtifactType.SANDS"
-      :available-main-stats="mainstats"
-      :available-sub-stats="substats"
+    :type="ArtifactType.SANDS"
+    :available-main-stats="mainstats"
+    :available-sub-stats="substats"
   />
 </template>
 

@@ -6,11 +6,11 @@ import Artifact from "./artifact/Artifact.vue";</script>
 
 <template>
   <div class="app-container">
-    <TotalStats class="sticky"/>
+    <TotalStats class="sticky" />
     <div class="app">
-      <Character/>
-      <Weapon/>
-      <Artifact/>
+      <Character />
+      <Weapon />
+      <Artifact />
     </div>
   </div>
 </template>

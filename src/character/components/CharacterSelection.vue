@@ -15,16 +15,22 @@ const selectCharacter = (i: number) => characterStore.selectCharacter(i);
 <template>
   <div class="character-selection">
     <select>
-      <option v-for="(character, i) in characters" :value="character" @click="selectCharacter(i)">
+      <option
+        v-for="(character, i) in characters"
+        :key="i"
+        :value="character"
+        @click="selectCharacter(i)"
+      >
         {{ character.name }}
       </option>
     </select>
     <select>
       <option
-          v-for="(stats, i) in characterStats"
-          :value="stats"
-          :selected="characterStore.activeStatsIndex === i"
-          @click="selectStats(i)"
+        v-for="(stats, i) in characterStats"
+        :key="i"
+        :value="stats"
+        :selected="characterStore.activeStatsIndex === i"
+        @click="selectStats(i)"
       >
         {{ `${stats.level}/${stats.ascensions === 0 ? 20 : stats.ascensions * 10 + 30}` }}
       </option>

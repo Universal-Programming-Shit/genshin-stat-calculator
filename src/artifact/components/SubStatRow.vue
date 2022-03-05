@@ -1,35 +1,42 @@
 <template>
   <div class="row">
-      <select
-          class="select"
-          v-model="useArtifactStore()[type].subStats[index].type"
-          @input="resetSelectedRoll"
+    <select
+      v-model="useArtifactStore()[type].subStats[index].type"
+      class="select"
+      @input="resetSelectedRoll"
+    >
+      <option
+        v-for="availableStat in availableSubStats"
+        :key="availableStat"
+        :value="availableStat"
+        :selected="useArtifactStore()[type].subStats[index].type === availableStat"
+        :hidden="usedSubStats.includes(availableStat) && !(artifactStore[type].subStats[index].type === availableStat)"
       >
-        <option
-            v-for="availableStat in availableSubStats"
-            :value="availableStat"
-            :selected="useArtifactStore()[type].subStats[index].type === availableStat"
-            :hidden="usedSubStats.includes(availableStat) && !(artifactStore[type].subStats[index].type === availableStat)"
-        >{{ toString(availableStat) }}
-        </option>
-      </select>
+        {{ toString(availableStat) }}
+      </option>
+    </select>
 
-      <select
-          style="min-width: 0"
-          v-model="artifactStore[type].subStats[index].rolls"
-          :disabled="useArtifactStore()[type].subStats[index].type === undefined"
+    <select
+      v-model="artifactStore[type].subStats[index].rolls"
+      style="min-width: 0"
+      :disabled="useArtifactStore()[type].subStats[index].type === undefined"
+    >
+      <option
+        v-for="roll in availableRolls"
+        :key="roll"
+        :value="roll"
       >
-        <option v-for="roll in availableRolls" :value="roll">
-          {{ (isPerc ? ((rollsValue(roll) * 100)).toFixed(2) : rollsValue(roll).toFixed(0)) }}{{ isPerc ? "%" : "" }}
-        </option>
-      </select>
+        {{ (isPerc ? ((rollsValue(roll) * 100)).toFixed(2) : rollsValue(roll).toFixed(0)) }}{{ isPerc ? "%" : "" }}
+      </option>
+    </select>
     <input
-        type="range"
-        v-model="rolls"
-        min="1" max="6"
-        @input="resetSelectedRoll"
-        :disabled="useArtifactStore()[type].subStats[index].type === undefined"
-    />
+      v-model="rolls"
+      type="range"
+      min="1"
+      max="6"
+      :disabled="useArtifactStore()[type].subStats[index].type === undefined"
+      @input="resetSelectedRoll"
+    >
   </div>
 </template>
 
@@ -41,8 +48,9 @@ import {computed, ref} from "vue";
 import {Artifact, subStatScalings} from "../../types/artifact";
 import {ArtifactType} from "../../types/artifactType";
 import add from "../../util/add";
+import {defineProps} from "vue"
 
-const {type, availableSubStats, index} = defineProps<{
+const props = defineProps<{
   type: ArtifactType,
   availableSubStats: Stats[],
   index: number
@@ -50,18 +58,12 @@ const {type, availableSubStats, index} = defineProps<{
 
 const artifactStore = useArtifactStore();
 
-const substatType = computed(() => useArtifactStore()[type].subStats[index].type);
-
-
 const usedSubStats = computed(() => {
-  const artifact: Artifact = useArtifactStore()[type];
+  const artifact: Artifact = useArtifactStore()[props.type];
   return [artifact.mainStat, ...artifact.subStats.map(s => s.type)];
 });
 
-const fac = (n: number) => n <= 1 ? 1 : n * fac(n - 1);
-
-
-const rolls = ref(artifactStore[type].subStats[index].rolls?.length ?? 1);
+const rolls = ref(artifactStore[props.type].subStats[props.index].rolls?.length ?? 1);
 
 
 const availableRolls = computed(() => {
@@ -69,7 +71,7 @@ const availableRolls = computed(() => {
       .sort((a, b) => a.reduce(add, 0) - b.reduce(add, 0));
 });
 
-const isPerc = computed(() => isPercentage(useArtifactStore()[type].subStats[index].type));
+const isPerc = computed(() => isPercentage(useArtifactStore()[props.type].subStats[props.index].type));
 
 const substatRolls = [0.7, 0.8, 0.9, 1.0];
 
@@ -93,15 +95,13 @@ function possibleValues(n): number[][] {
 }
 
 const rollsValue = (rolls: number[]) => {
-  const statScaling = subStatScalings
-      [artifactStore[type].stars]
-      [artifactStore[type].subStats[index].type];
+  const statScaling = subStatScalings[artifactStore[props.type].stars][artifactStore[props.type].subStats[props.index].type];
   return rolls.map(n => n * statScaling)
       .reduce(add, 0);
 };
 
 function resetSelectedRoll() {
-  artifactStore[type].subStats[index].rolls = availableRolls.value[0];
+  artifactStore[props.type].subStats[props.index].rolls = availableRolls.value[0];
 }
 </script>
 

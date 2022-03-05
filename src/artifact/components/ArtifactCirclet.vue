@@ -1,8 +1,8 @@
 <template>
   <ArtifactSelection
-      :type="ArtifactType.CIRCLET"
-      :available-main-stats="mainstats"
-      :available-sub-stats="substats"
+    :type="ArtifactType.CIRCLET"
+    :available-main-stats="mainstats"
+    :available-sub-stats="substats"
   />
 </template>
 

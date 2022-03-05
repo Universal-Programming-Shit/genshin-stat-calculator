@@ -1,8 +1,8 @@
 <template>
   <ArtifactSelection
-      :type="ArtifactType.FLOWER"
-      :available-main-stats="[Stats.HP_FLAT]"
-      :available-sub-stats="substats"
+    :type="ArtifactType.FLOWER"
+    :available-main-stats="[Stats.HP_FLAT]"
+    :available-sub-stats="substats"
   />
 </template>
 

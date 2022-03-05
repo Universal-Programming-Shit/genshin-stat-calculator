@@ -14,26 +14,26 @@ const ascentionStatValue = computed(() => useCharacterStore().selectedStats.asce
 <template>
   <table>
     <tbody>
-    <tr>
-      <td>Element</td>
-      <td>{{ element }}</td>
-    </tr>
-    <tr>
-      <td>Base Hp</td>
-      <td>{{ baseHp }}</td>
-    </tr>
-    <tr>
-      <td>Base Atk</td>
-      <td>{{ baseAtk }}</td>
-    </tr>
-    <tr>
-      <td>Base Def</td>
-      <td>{{ baseDef }}</td>
-    </tr>
-    <tr>
-      <td>{{ ascensionStat }}</td>
-      <td>{{ (ascentionStatValue * 100).toFixed(2) }}%</td>
-    </tr>
+      <tr>
+        <td>Element</td>
+        <td>{{ element }}</td>
+      </tr>
+      <tr>
+        <td>Base Hp</td>
+        <td>{{ baseHp }}</td>
+      </tr>
+      <tr>
+        <td>Base Atk</td>
+        <td>{{ baseAtk }}</td>
+      </tr>
+      <tr>
+        <td>Base Def</td>
+        <td>{{ baseDef }}</td>
+      </tr>
+      <tr>
+        <td>{{ ascensionStat }}</td>
+        <td>{{ (ascentionStatValue * 100).toFixed(2) }}%</td>
+      </tr>
     </tbody>
   </table>
 </template>
