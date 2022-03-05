@@ -4,5 +4,8 @@ import vue from "@vitejs/plugin-vue";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
-  base: "/genshin-stat-calculator/"
+  base: "/genshin-stat-calculator/",
+  build: {
+    outDir: "docs"
+  }
 });

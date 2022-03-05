@@ -28,5 +28,5 @@ jobs:
           git status
           git config user.name "Action Runner"
           git add dist
-          git commit -m "Deploy branch $branch"
-          git subtree push --prefix dist origin gh-pages
+          git commit -m "Rebuild application"
+          git push
