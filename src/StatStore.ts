@@ -49,9 +49,9 @@ export const useStatStore = defineStore("stat", {
 
       const characterMult = characterStore.selectedCharacter.ascensionStat === LevelUpStat.DEFENSE ? characterStore.selectedStats.ascentionStatValue : 0;
       const weaponMult = weaponStore.selectedWeapon.subStat === LevelUpStat.DEFENSE ? weaponStore.selectedStats.subStatValue : 0;
-      const totalMult = (1 + characterMult + weaponMult + artifactStore.atkPerc);
+      const totalMult = (1 + characterMult + weaponMult + artifactStore.defPerc);
 
-      const flat = artifactStore.atkFlat;
+      const flat = artifactStore.defFlat;
 
       return (base * totalMult) + flat;
     },

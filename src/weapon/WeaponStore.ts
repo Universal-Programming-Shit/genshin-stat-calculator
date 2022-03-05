@@ -5,7 +5,8 @@ import {WeaponType} from "../types/weaponType";
 import clamp from "../util/clamp";
 import getElem from "../util/getElem";
 import {Weapon, WeaponStats} from "../types/weapon";
-import { useStorage } from '@vueuse/core'
+import {useStorage} from "@vueuse/core";
+import {LevelUpStat} from "../types/levelUpStat";
 
 export const useWeaponStore = defineStore("weapon", {
   state: () => useStorage("weapon", {
@@ -13,10 +14,19 @@ export const useWeaponStore = defineStore("weapon", {
     selectedStatIndex: 0,
   }),
   getters: {
-    selectedWeapon: (state): Weapon => getElem(state.availableWeapons, state.selectedWeaponIndex),
-    selectedStats: (state): WeaponStats => getElem(state.selectedWeapon.stats, state.selectedStatIndex),
     availableWeapons: (): Weapon[] => {
-      return data[useCharacterStore().selectedCharacter.weapon ?? WeaponType.CATALYST]
+      return data[useCharacterStore().selectedCharacter.weapon] ?? [];
+    },
+    selectedWeapon: (state): Weapon => getElem(state.availableWeapons, state.selectedWeaponIndex) ?? {
+      name: "UNKNOWN",
+      subStat: -1 as LevelUpStat,
+      type: -1 as WeaponType,
+      stats: [],
+    },
+    selectedStats: (state): WeaponStats => getElem(state.selectedWeapon.stats, state.selectedStatIndex) ?? {
+      flatAttack: 0,
+      subStatValue: 0,
+      level: 0,
     },
   },
   actions: {
