@@ -23,6 +23,7 @@ const mainstats = ref([
 const substats = [
     Stats.ENERGY_RECHARGE,
     Stats.HP_PERC,
+    Stats.HP_FLAT,
     Stats.ATTACK_FLAT,
     Stats.ATTACK_PERC,
     Stats.DEF_FLAT,
