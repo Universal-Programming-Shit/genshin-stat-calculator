@@ -27,6 +27,6 @@ jobs:
       - run: |
           git status
           git config user.name "Action Runner"
-          git add dist
+          git add docs
           git commit -m "Rebuild application"
           git push
