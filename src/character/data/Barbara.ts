@@ -23,7 +23,7 @@ const stats: CharacterStats[] = [
 const Barbara: Character = {
   name: "Barbara",
   element: Element.HYDRO,
-  ascensionStat: LevelUpStat.HP_PERC,
+  ascensionStat: LevelUpStat.HP,
   weapon: WeaponType.CATALYST,
   stats,
 };

@@ -23,7 +23,7 @@ const stats: CharacterStats[] = [
 const Amber: Character = {
   name: "Amber",
   element: Element.PYRO,
-  ascensionStat: LevelUpStat.ATTACK_PERC,
+  ascensionStat: LevelUpStat.ATTACK,
   weapon: WeaponType.BOW,
   stats,
 };

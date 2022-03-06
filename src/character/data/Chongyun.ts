@@ -23,7 +23,7 @@ const stats: CharacterStats[] = [
 const Chongyun: Character = {
   name: "Chongyun",
   element: Element.CRYO,
-  ascensionStat: LevelUpStat.ATTACK_PERC,
+  ascensionStat: LevelUpStat.ATTACK,
   weapon: WeaponType.CLAYMORE,
   stats,
 };

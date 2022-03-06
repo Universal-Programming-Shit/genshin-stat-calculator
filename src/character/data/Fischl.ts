@@ -23,7 +23,7 @@ const stats: CharacterStats[] = [
 const Fischl: Character = {
   name: "Fischl",
   element: Element.ELECTRO,
-  ascensionStat: LevelUpStat.ATTACK_PERC,
+  ascensionStat: LevelUpStat.ATTACK,
   weapon: WeaponType.BOW,
   stats,
 };
