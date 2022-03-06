@@ -14,6 +14,12 @@ const stats: CharacterStats[] = [
   statBlock(50, 2, 5383, 148, 338, 0.08),
   statBlock(50, 3, 6041, 167, 379, 0.16),
   statBlock(60, 3, 6752, 186, 424, 0.16),
+  statBlock(60, 4, 7246, 200, 455, 0.16),
+  statBlock(70, 4, 7964, 220, 500, 0.16),
+  statBlock(70, 5, 8458, 233, 531, 0.24),
+  statBlock(80, 5, 9184, 253, 576, 0.24),
+  statBlock(80, 6, 9677, 267, 607, 0.32),
+  statBlock(90, 6, 10409, 287, 653, 0.32),
 ];
 
 const Mona: Character = {
