@@ -19,6 +19,11 @@ import Kaeya from "./Kaeya"
 import Mona from "./Mona"
 import Yanfei from "./Yanfei"
 import {Character} from "../../types/character";
+import KamisatoAyaka from "./KamisatoAyaka";
+import Keqing from "./Keqing";
+import KujouSara from "./KujouSara";
+import Klee from "./Klee";
+import Lisa from "./Lisa";
 
 export default [
   Albedo,
@@ -39,6 +44,11 @@ export default [
   Jean,
   KaedeharaKazuha,
   Kaeya,
+  KamisatoAyaka,
+  Keqing,
+  Klee,
+  KujouSara,
+  Lisa,
   Mona,
   Yanfei
 ] as Character[];
