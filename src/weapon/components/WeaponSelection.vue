@@ -3,35 +3,30 @@ import {computed} from "vue";
 import {useWeaponStore} from "../WeaponStore";
 
 const weaponStore = useWeaponStore();
+
 const weapons = computed(() => useWeaponStore().availableWeapons);
-
 const weaponStats = computed(() => useWeaponStore().selectedWeapon.stats);
-
-const selectStats = (i: number) => weaponStore.selectStats(i);
-const selectWeapon = (i: number) => weaponStore.selectWeapon(i);
 </script>
 
 <template>
   <div class="weapon-selection">
-    <select>
+    <select v-model="weaponStore.selectedWeaponIndex">
       <option
         v-for="(weapon, i) in weapons"
         :key="i"
-        :value="weapon"
-        :selected="useWeaponStore().selectedWeaponIndex === i"
-        @click="selectWeapon(i)"
+        :value="i"
+        :selected="weaponStore.selectedWeaponIndex === i"
       >
         {{ weapon.name }}
       </option>
     </select>
 
-    <select>
+    <select v-model="weaponStore.selectedStatIndex">
       <option
         v-for="(stats, i) in weaponStats"
         :key="i"
-        :value="stats"
-        :selected="useWeaponStore().selectedStatIndex === i"
-        @click="selectStats(i)"
+        :value="i"
+        :selected="weaponStore.selectedStatIndex === i"
       >
         {{ `${stats.level}/${stats.level === 1 ? 20 : stats.level}` }}
       </option>
