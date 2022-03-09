@@ -7,30 +7,25 @@ const characters = ref(data);
 const characterStore = useCharacterStore();
 
 const characterStats = computed(() => useCharacterStore().selectedCharacter.stats);
-
-const selectStats = (i: number) => characterStore.selectStats(i);
-const selectCharacter = (i: number) => characterStore.selectCharacter(i);
 </script>
 
 <template>
   <div class="character-selection">
-    <select>
+    <select v-model="characterStore.selectedCharacterIndex">
       <option
         v-for="(character, i) in characters"
         :key="i"
-        :value="character"
-        @click="selectCharacter(i)"
+        :value="i"
       >
         {{ character.name }}
       </option>
     </select>
-    <select>
+    <select v-model="characterStore.selectedStatsIndex">
       <option
         v-for="(stats, i) in characterStats"
         :key="i"
-        :value="stats"
-        :selected="characterStore.activeStatsIndex === i"
-        @click="selectStats(i)"
+        :value="i"
+        :selected="characterStore.selectedStatsIndex === i"
       >
         {{ `${stats.level}/${stats.ascensions === 0 ? 20 : stats.ascensions * 10 + 30}` }}
       </option>

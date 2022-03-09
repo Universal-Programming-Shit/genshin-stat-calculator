@@ -3,6 +3,7 @@
   "packageManager": "yarn@3.1.1",
   "scripts": {
     "build": "vite build",
+    "serve remote": "vite serve --host",
     "serve": "vite serve",
     "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore --fix src"
   },
