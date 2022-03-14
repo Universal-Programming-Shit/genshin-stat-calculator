@@ -24,6 +24,28 @@ import Keqing from "./Keqing";
 import KujouSara from "./KujouSara";
 import Klee from "./Klee";
 import Lisa from "./Lisa";
+import Ningguang from "./Ningguang";
+import Qiqi from "./Qiqi";
+import RaidenShogun from "./RaidenShogun";
+import Razor from "./Razor";
+import SangonomiyaKokomi from "./SangonomiyaKokomi";
+import Sayu from "./Sayu";
+import Shenhe from "./Shenhe";
+import Sucrose from "./Sucrose";
+import Tartaglia from "./Tartaglia";
+import Thoma from "./Thoma";
+import TravelerAnemo from "./TravelerAnemo";
+import TravelerElectro from "./TravelerElectro";
+import TravelerGeo from "./TravelerGeo";
+import Venti from "./Venti";
+import Xiangling from "./Xiangling";
+import Xiao from "./Xiao";
+import Xingqiu from "./Xingqiu";
+import Xinyan from "./Xinyan";
+import YaeMiko from "./YaeMiko";
+import Yoimiya from "./Yoimiya";
+import YunJin from "./YunJin";
+import Zhongli from "./Zhongli";
 
 export default [
   Albedo,
@@ -50,6 +72,28 @@ export default [
   KujouSara,
   Lisa,
   Mona,
-  Yanfei
+  Ningguang,
+  Qiqi,
+  RaidenShogun,
+  Razor,
+  SangonomiyaKokomi,
+  Sayu,
+  Shenhe,
+  Sucrose,
+  Tartaglia,
+  Thoma,
+  TravelerAnemo,
+  TravelerElectro,
+  TravelerGeo,
+  Venti,
+  Xiangling,
+  Xiao,
+  Xingqiu,
+  Xinyan,
+  YaeMiko,
+  Yanfei,
+  Yoimiya,
+  YunJin,
+  Zhongli
 ] as Character[];
 
