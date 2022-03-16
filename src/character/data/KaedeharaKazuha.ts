@@ -21,7 +21,7 @@ const stats: CharacterStats[] = [
   statBlock(90, 6, 13348, 297, 807, 115.2),
 ];
 const KaedeharaKazuha: Character = {
-  name: "KaedeharaKazuha",
+  name: "Kaedehara Kazuha",
   element: Element.ANEMO,
   ascensionStat: LevelUpStat.ELEMENTAL_MASTERY,
   weapon: WeaponType.SWORD,

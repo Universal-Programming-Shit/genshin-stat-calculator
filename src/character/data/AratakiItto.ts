@@ -21,7 +21,7 @@ const stats: CharacterStats[] = [
   statBlock(90, 6, 12858, 227, 959, 0.192),
 ];
 const AratakiItto: Character = {
-  name: "AratakiItto",
+  name: "Arataki Itto",
   element: Element.GEO,
   ascensionStat: LevelUpStat.CRIT_RATE,
   weapon: WeaponType.CLAYMORE,

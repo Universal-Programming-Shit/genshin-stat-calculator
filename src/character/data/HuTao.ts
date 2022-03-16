@@ -21,7 +21,7 @@ const stats: CharacterStats[] = [
   statBlock(90, 6, 15552, 106, 876, 0.384),
 ];
 const HuTao: Character = {
-  name: "HuTao",
+  name: "Hu Tao",
   element: Element.PYRO,
   ascensionStat: LevelUpStat.CRIT_DAMAGE,
   weapon: WeaponType.POLEARM,
