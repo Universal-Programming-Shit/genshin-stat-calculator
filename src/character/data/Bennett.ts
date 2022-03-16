@@ -1,8 +1,8 @@
-import {statBlock, CharacterStats} from "../../types/characterStats";
-import {LevelUpStat} from "../../types/levelUpStat";
-import {Element} from "../../types/element";
-import {Character} from "../../types/character";
-import {WeaponType} from "../../types/weaponType";
+import { statBlock, CharacterStats } from "../../types/characterStats";
+import { LevelUpStat } from "../../types/levelUpStat";
+import { Element } from "../../types/element";
+import { Character } from "../../types/character";
+import { WeaponType } from "../../types/weaponType";
 
 const stats: CharacterStats[] = [
   statBlock(1, 0, 1039, 16, 65, 0),
@@ -15,8 +15,8 @@ const stats: CharacterStats[] = [
   statBlock(60, 3, 8168, 126, 508, 0.133),
   statBlock(60, 4, 8719, 134, 542, 0.133),
   statBlock(70, 4, 9577, 148, 596, 0.133),
-  statBlock(70, 5, 10129, 156, 630, 0.20),
-  statBlock(80, 5, 10987, 169, 684, 0.20),
+  statBlock(70, 5, 10129, 156, 630, 0.2),
+  statBlock(80, 5, 10987, 169, 684, 0.2),
   statBlock(80, 6, 11539, 178, 771, 0.267),
   statBlock(90, 6, 12397, 191, 771, 0.267),
 ];

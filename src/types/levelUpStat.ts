@@ -8,5 +8,5 @@ export enum LevelUpStat {
   HP = "Hp",
   ENERGY_RECHARGE = "Energy Recharge",
   ELEMENTAL_MASTERY = "Elemental Mastery",
-  PHYSICAL_DAMAGE = "Physical Damage"
+  PHYSICAL_DAMAGE = "Physical Damage",
 }

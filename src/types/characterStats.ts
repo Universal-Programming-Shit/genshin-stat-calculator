@@ -7,11 +7,18 @@ export interface CharacterStats {
   ascentionStatValue: number;
 }
 
-export function statBlock(level: number, ascensions: number, baseHp: number, baseAtk: number, baseDef: number, ascentionStatValue: number): CharacterStats{
-  return {level, ascensions, baseHp, baseAtk, baseDef, ascentionStatValue};
+export function statBlock(
+  level: number,
+  ascensions: number,
+  baseHp: number,
+  baseAtk: number,
+  baseDef: number,
+  ascentionStatValue: number
+): CharacterStats {
+  return { level, ascensions, baseHp, baseAtk, baseDef, ascentionStatValue };
 }
 
-export const StatNames =  {
+export const StatNames = {
   name: "Name",
   level: "Level",
   baseHp: "Base HP",
@@ -20,5 +27,5 @@ export const StatNames =  {
   element: "Element",
   ascensions: "Ascensions",
   ascensionStat: "Ascension Stat",
-  ascentionStatValue: "Ascension Stat Value"
-}
+  ascentionStatValue: "Ascension Stat Value",
+};

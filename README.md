@@ -1,4 +1,5 @@
 # Genshin Stat Calculator
+
 A small webpage to calculate stats of Genshin Impact characters.
 
 Select the character + level, then weapon + level, finally configure your arefacts and see what your stats will be.
@@ -8,7 +9,8 @@ For those of you who wondered, if its possible to have a Qiqi with 2k att and 2k
 This repo is hosted on github pages: https://universal-programming-shit.github.io/genshin-stat-calculator/
 
 ## Implementation
-This project is build using vite, TypeScript and Vue 3. 
+
+This project is build using vite, TypeScript and Vue 3.
 
 ## Sources
 

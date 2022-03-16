@@ -7,5 +7,5 @@ export default [
   HakushinRing,
   SolarPearl,
   ThrillingTalesofDragonSlayers,
-  SacrificialFragments
+  SacrificialFragments,
 ];

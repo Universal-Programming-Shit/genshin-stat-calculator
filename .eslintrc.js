@@ -13,10 +13,12 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "eslint:recommended",
     "plugin:vue/vue3-recommended",
+    "prettier",
   ],
   plugins: ["@typescript-eslint"],
   rules: {
     "no-unused-vars": "off",
+    "vue/no-empty-component-block": "error",
   },
   ignorePatterns: ["dist"],
 };

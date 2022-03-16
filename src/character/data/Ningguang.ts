@@ -1,8 +1,8 @@
-import {CharacterStats, statBlock} from "../../types/characterStats";
-import {Character} from "../../types/character";
-import {Element} from "../../types/element";
-import {LevelUpStat} from "../../types/levelUpStat";
-import {WeaponType} from "../../types/weaponType";
+import { CharacterStats, statBlock } from "../../types/characterStats";
+import { Character } from "../../types/character";
+import { Element } from "../../types/element";
+import { LevelUpStat } from "../../types/levelUpStat";
+import { WeaponType } from "../../types/weaponType";
 
 const stats: CharacterStats[] = [
   statBlock(1, 0, 821, 18, 48, 0),
@@ -18,9 +18,8 @@ const stats: CharacterStats[] = [
   statBlock(70, 5, 7996, 174, 468, 0.18),
   statBlock(80, 5, 8674, 188, 508, 0.18),
   statBlock(80, 6, 9110, 198, 534, 0.24),
-  statBlock(90, 6, 9787, 212, 573, 0.24)
+  statBlock(90, 6, 9787, 212, 573, 0.24),
 ];
-
 
 const Ningguang: Character = {
   name: "Ningguang",

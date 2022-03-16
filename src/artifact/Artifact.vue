@@ -17,7 +17,6 @@
 </template>
 
 <script setup lang="ts">
-
 import ArtifactFlower from "./components/ArtifactFlower.vue";
 import ArtifactFeather from "./components/ArtifactFeather.vue";
 import ArtifactSands from "./components/ArtifactSands.vue";
@@ -26,7 +25,6 @@ import ArtifactCirclet from "./components/ArtifactCirclet.vue";
 </script>
 
 <style scoped>
-
 .artifact-container {
   box-shadow: #00000050 4px 4px;
   border: black 1px solid;

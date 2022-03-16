@@ -11,10 +11,11 @@ export enum Stats {
   DEF_PERC,
   ENERGY_RECHARGE,
   ELEMENTAL_MASTERY,
-  PHYSICAL_DAMAGE
+  PHYSICAL_DAMAGE,
 }
 
-export const isPercentage = stat => stat === Stats.CRIT_RATE ||
+export const isPercentage = (stat) =>
+  stat === Stats.CRIT_RATE ||
   stat === Stats.CRIT_DAMAGE ||
   stat === Stats.ELEMENTAL_DAMAGE ||
   stat === Stats.HEALING_BONUS ||

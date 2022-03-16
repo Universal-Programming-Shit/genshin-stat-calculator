@@ -1,6 +1,6 @@
-import {statBlock, Weapon, WeaponStats} from "../../../types/weapon";
-import {LevelUpStat} from "../../../types/levelUpStat";
-import {WeaponType} from "../../../types/weaponType";
+import { statBlock, Weapon, WeaponStats } from "../../../types/weapon";
+import { LevelUpStat } from "../../../types/levelUpStat";
+import { WeaponType } from "../../../types/weaponType";
 
 const stats: WeaponStats[] = [
   statBlock(1, 42, 0.06),

@@ -2,7 +2,8 @@
 import Character from "./character/Character.vue";
 import Weapon from "./weapon/Weapon.vue";
 import TotalStats from "./TotalStats.vue";
-import Artifact from "./artifact/Artifact.vue";</script>
+import Artifact from "./artifact/Artifact.vue";
+</script>
 
 <template>
   <div class="app-container">

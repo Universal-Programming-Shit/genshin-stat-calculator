@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {computed} from "vue";
-import {useWeaponStore} from "../WeaponStore";
+import { computed } from "vue";
+import { useWeaponStore } from "../WeaponStore";
 
 const weaponStore = useWeaponStore();
 
@@ -35,7 +35,7 @@ const weaponStats = computed(() => useWeaponStore().selectedWeapon.stats);
 </template>
 
 <style scoped>
-.weapon-selection{
+.weapon-selection {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -49,14 +49,13 @@ const weaponStats = computed(() => useWeaponStore().selectedWeapon.stats);
   background-color: unset;
   padding: 4px;
 }
-.weapon-selection select:first-child{
+.weapon-selection select:first-child {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.weapon-selection select:last-child{
-  width: 3.5em
+.weapon-selection select:last-child {
+  width: 3.5em;
 }
-
 
 .weapon-selection > select > option {
   font-size: medium;

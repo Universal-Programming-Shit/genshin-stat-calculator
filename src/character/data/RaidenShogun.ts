@@ -1,8 +1,8 @@
-import {statBlock} from "../../types/characterStats";
-import {Character} from "../../types/character";
-import {WeaponType} from "../../types/weaponType";
-import {LevelUpStat} from "../../types/levelUpStat";
-import {Element} from "../../types/element";
+import { statBlock } from "../../types/characterStats";
+import { Character } from "../../types/character";
+import { WeaponType } from "../../types/weaponType";
+import { LevelUpStat } from "../../types/levelUpStat";
+import { Element } from "../../types/element";
 
 const stats = [
   statBlock(1, 0, 1005, 26, 61, 0),
