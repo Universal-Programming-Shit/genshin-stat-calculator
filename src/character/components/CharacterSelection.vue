@@ -2,6 +2,7 @@
 import {useCharacterStore} from "../CharacterStore";
 import {computed, ref} from "vue";
 import data from "../data";
+import {getColor} from "../../types/element";
 
 const characters = ref(data);
 const characterStore = useCharacterStore();
@@ -15,6 +16,7 @@ const characterStats = computed(() => useCharacterStore().selectedCharacter.stat
       <option
         v-for="(character, i) in characters"
         :key="i"
+        :style="{backgroundColor: getColor(character.element)}"
         :value="i"
       >
         {{ character.name }}
