@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import {useCharacterStore} from "../CharacterStore";
-import {computed} from "vue";
+import { useCharacterStore } from "../CharacterStore";
+import { computed } from "vue";
 
 const element = computed(() => useCharacterStore().selectedCharacter.element);
 const baseHp = computed(() => useCharacterStore().selectedStats.baseHp);
 const baseAtk = computed(() => useCharacterStore().selectedStats.baseAtk);
 const baseDef = computed(() => useCharacterStore().selectedStats.baseDef);
-const ascensionStat = computed(() => useCharacterStore().selectedCharacter.ascensionStat);
-const ascentionStatValue = computed(() => useCharacterStore().selectedStats.ascentionStatValue);
-
+const ascensionStat = computed(
+  () => useCharacterStore().selectedCharacter.ascensionStat
+);
+const ascentionStatValue = computed(
+  () => useCharacterStore().selectedStats.ascentionStatValue
+);
 </script>
 
 <template>

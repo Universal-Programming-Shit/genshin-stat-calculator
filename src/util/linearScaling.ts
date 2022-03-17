@@ -6,6 +6,6 @@
  */
 export default (b: number, y: number, x: number) => {
   return (level) => {
-    return (y - b) / x * level + b;
+    return ((y - b) / x) * level + b;
   };
 };

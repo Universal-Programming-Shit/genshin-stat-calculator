@@ -3,5 +3,5 @@ export enum ArtifactType {
   FEATHER = "Feather",
   SANDS = "Sands",
   GOBLET = "Goblet",
-  CIRCLET = "Circlet"
+  CIRCLET = "Circlet",
 }

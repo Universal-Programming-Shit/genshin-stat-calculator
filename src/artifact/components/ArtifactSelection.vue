@@ -2,15 +2,9 @@
   <div class="artifact-selection">
     <div>{{ type }}</div>
     <select v-model="artifactStore[type].stars">
-      <option :value="Stars.S5">
-        5 Star
-      </option>
-      <option :value="Stars.S4">
-        4 Star
-      </option>
-      <option :value="Stars.S3">
-        3 Star
-      </option>
+      <option :value="Stars.S5">5 Star</option>
+      <option :value="Stars.S4">4 Star</option>
+      <option :value="Stars.S3">3 Star</option>
     </select>
   </div>
   <table>
@@ -23,7 +17,7 @@
             type="range"
             min="1"
             :max="maxLevel"
-          >
+          />
         </th>
       </tr>
     </thead>
@@ -45,7 +39,13 @@
             </option>
           </select>
         </th>
-        <th>{{ isPerc ? (mainStatValue * 100).toFixed(2) : mainStatValue.toFixed(0) }}{{ isPerc ? "%" : "" }}</th>
+        <th>
+          {{
+            isPerc
+              ? (mainStatValue * 100).toFixed(2)
+              : mainStatValue.toFixed(0)
+          }}{{ isPerc ? "%" : "" }}
+        </th>
       </tr>
     </thead>
   </table>
@@ -75,19 +75,19 @@
 </template>
 
 <script setup lang="ts">
-import {ArtifactType} from "../../types/artifactType";
-import {isPercentage, Stats, toString} from "../../types/stats";
-import {computed, defineEmits} from "vue";
-import {Artifact, mainStatScalings} from "../../types/artifact";
-import {Stars} from "../../types/stars";
+import { ArtifactType } from "../../types/artifactType";
+import { isPercentage, Stats, toString } from "../../types/stats";
+import { computed, defineEmits } from "vue";
+import { Artifact, mainStatScalings } from "../../types/artifact";
+import { Stars } from "../../types/stars";
 import SubStatRow from "./SubStatRow.vue";
-import {useArtifactStore} from "../ArtifactStore";
-import {defineProps} from "vue"
+import { useArtifactStore } from "../ArtifactStore";
+import { defineProps } from "vue";
 
 const props = defineProps<{
-  type: ArtifactType,
-  availableMainStats: Stats[],
-  availableSubStats: Stats[]
+  type: ArtifactType;
+  availableMainStats: Stats[];
+  availableSubStats: Stats[];
 }>();
 
 defineEmits<{ artifact: Artifact }>();
@@ -112,18 +112,19 @@ const maxLevel = computed(() => {
       return 16;
     case Stars.S5:
       return 20;
-    default: return 0;
+    default:
+      return 0;
   }
 });
 
 const isPerc = computed(() => isPercentage(mainStat.value));
 
-const mainStatValue = computed(() => mainStatScalings[stars.value][mainStat.value](level.value));
-
+const mainStatValue = computed(() =>
+  mainStatScalings[stars.value][mainStat.value](level.value)
+);
 </script>
 
 <style scoped>
-
 .artifact-selection {
   width: 100%;
   display: flex;
@@ -141,7 +142,7 @@ const mainStatValue = computed(() => mainStatScalings[stars.value][mainStat.valu
 }
 
 .artifact-selection *:last-child {
-  width: 3.5em
+  width: 3.5em;
 }
 
 .artifact-selection > select > option {
@@ -152,7 +153,8 @@ table {
   width: 100%;
 }
 
-tr td, tr th {
+tr td,
+tr th {
   outline: black 1px solid;
   padding: 10px;
 }

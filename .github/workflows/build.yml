@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     env:
@@ -21,7 +20,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ env.node-version }}
-          cache: 'yarn'
+          cache: "yarn"
       - run: yarn install --immutable --immutable-cache
       - run: yarn run build
       - run: |

@@ -283,7 +283,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/compiler-sfc@npm:3.2.31, @vue/compiler-sfc@npm:^3.2.31":
+"@vue/compiler-sfc@npm:3.2.31":
   version: 3.2.31
   resolution: "@vue/compiler-sfc@npm:3.2.31"
   dependencies:
@@ -958,6 +958,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-config-prettier@npm:^8.5.0":
+  version: 8.5.0
+  resolution: "eslint-config-prettier@npm:8.5.0"
+  peerDependencies:
+    eslint: ">=7.0.0"
+  bin:
+    eslint-config-prettier: bin/cli.js
+  checksum: 0d0f5c32e7a0ad91249467ce71ca92394ccd343178277d318baf32063b79ea90216f4c81d1065d60f96366fdc60f151d4d68ae7811a58bd37228b84c2083f893
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-vue@npm:^8.5.0":
   version: 8.5.0
   resolution: "eslint-plugin-vue@npm:8.5.0"
@@ -1270,11 +1281,12 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.15.0
     "@typescript-eslint/parser": ^5.15.0
     "@vitejs/plugin-vue": ^2.2.4
-    "@vue/compiler-sfc": ^3.2.31
     "@vueuse/core": ^7.7.1
     eslint: ^8.11.0
+    eslint-config-prettier: ^8.5.0
     eslint-plugin-vue: ^8.5.0
     pinia: ^2.0.12
+    prettier: ^2.6.0
     reset-css: ^5.0.1
     typescript: ^4.6.2
     vite: ^2.8.6
@@ -1929,6 +1941,15 @@ __metadata:
   version: 1.2.1
   resolution: "prelude-ls@npm:1.2.1"
   checksum: cd192ec0d0a8e4c6da3bb80e4f62afe336df3f76271ac6deb0e6a36187133b6073a19e9727a1ff108cd8b9982e4768850d413baa71214dd80c7979617dca827a
+  languageName: node
+  linkType: hard
+
+"prettier@npm:^2.6.0":
+  version: 2.6.0
+  resolution: "prettier@npm:2.6.0"
+  bin:
+    prettier: bin-prettier.js
+  checksum: 3e527ad62279676778a8404d18174d7ca2365ada4caba6eebbcdd9907d1187afd3bc6ade5b4e5f5d4549bb9fb71e45ca8930d71500017635524f8fc05bc52e93
   languageName: node
   linkType: hard
 

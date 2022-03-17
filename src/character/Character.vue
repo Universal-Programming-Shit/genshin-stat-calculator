@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="character-container"
-    :style="{backgroundColor: color}"
-  >
+  <div class="character-container" :style="{ backgroundColor: color }">
     <character-selection />
     <character-stat-overview />
   </div>
@@ -11,13 +8,12 @@
 <script setup lang="ts">
 import CharacterSelection from "./components/CharacterSelection.vue";
 import CharacterStatOverview from "./components/CharacterStatOverview.vue";
-import {useCharacterStore} from "./CharacterStore";
-import {computed} from "vue";
-import {getColor} from "../types/element";
+import { useCharacterStore } from "./CharacterStore";
+import { computed } from "vue";
+import { getColor } from "../types/element";
 
 const element = computed(() => useCharacterStore().selectedCharacter.element);
 const color = computed(() => getColor(element.value));
-
 </script>
 
 <style scoped>

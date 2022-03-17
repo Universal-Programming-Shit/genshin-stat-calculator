@@ -1,14 +1,14 @@
-import {statBlock, CharacterStats} from "../../types/characterStats";
-import {LevelUpStat} from "../../types/levelUpStat";
-import {Element} from "../../types/element";
-import {Character} from "../../types/character";
-import {WeaponType} from "../../types/weaponType";
+import { statBlock, CharacterStats } from "../../types/characterStats";
+import { LevelUpStat } from "../../types/levelUpStat";
+import { Element } from "../../types/element";
+import { Character } from "../../types/character";
+import { WeaponType } from "../../types/weaponType";
 
 const stats: CharacterStats[] = [
   statBlock(1, 0, 802, 18, 50, 0),
   statBlock(20, 0, 2061, 46, 129, 0),
   statBlock(20, 1, 2661, 59, 167, 0),
-  statBlock(40, 1, 3985, 88	, 250, 0),
+  statBlock(40, 1, 3985, 88, 250, 0),
   statBlock(40, 2, 4411, 98, 277, 0.06),
   statBlock(50, 2, 5074, 113, 318, 0.06),
   statBlock(50, 3, 5642, 125, 354, 0.12),

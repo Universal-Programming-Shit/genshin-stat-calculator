@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import {useCharacterStore} from "../CharacterStore";
-import {computed, ref} from "vue";
+import { useCharacterStore } from "../CharacterStore";
+import { computed, ref } from "vue";
 import data from "../data";
-import {getColor} from "../../types/element";
+import { getColor } from "../../types/element";
 
 const characters = ref(data);
 const characterStore = useCharacterStore();
 
-const characterStats = computed(() => useCharacterStore().selectedCharacter.stats);
+const characterStats = computed(
+  () => useCharacterStore().selectedCharacter.stats
+);
 </script>
 
 <template>
@@ -16,7 +18,7 @@ const characterStats = computed(() => useCharacterStore().selectedCharacter.stat
       <option
         v-for="(character, i) in characters"
         :key="i"
-        :style="{backgroundColor: getColor(character.element)}"
+        :style="{ backgroundColor: getColor(character.element) }"
         :value="i"
       >
         {{ character.name }}
@@ -29,14 +31,18 @@ const characterStats = computed(() => useCharacterStore().selectedCharacter.stat
         :value="i"
         :selected="characterStore.selectedStatsIndex === i"
       >
-        {{ `${stats.level}/${stats.ascensions === 0 ? 20 : stats.ascensions * 10 + 30}` }}
+        {{
+          `${stats.level}/${
+            stats.ascensions === 0 ? 20 : stats.ascensions * 10 + 30
+          }`
+        }}
       </option>
     </select>
   </div>
 </template>
 
 <style scoped>
-.character-selection{
+.character-selection {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -50,8 +56,8 @@ const characterStats = computed(() => useCharacterStore().selectedCharacter.stat
   background-color: unset;
   padding: 4px;
 }
-.character-selection select:last-child{
-  width: 3.5em
+.character-selection select:last-child {
+  width: 3.5em;
 }
 .character-selection > select > option {
   font-size: medium;

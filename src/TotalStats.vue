@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {useStatStore} from "./StatStore";
-import {useCharacterStore} from "./character/CharacterStore";
+import { useStatStore } from "./StatStore";
+import { useCharacterStore } from "./character/CharacterStore";
 const characterStore = useCharacterStore();
 const statStore = useStatStore();
 </script>
@@ -46,8 +46,6 @@ const statStore = useStatStore();
     </table>
   </div>
 </template>
-
-
 
 <style scoped>
 .container {

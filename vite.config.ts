@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [vue()],
   base: "/genshin-stat-calculator/",
   build: {
-    outDir: "docs"
-  }
+    outDir: "docs",
+  },
 });
