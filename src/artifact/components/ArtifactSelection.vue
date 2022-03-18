@@ -1,7 +1,7 @@
 <template>
   <div class="artifact-selection">
     <div>{{ type }}</div>
-    <select v-model="artifactStore[type].stars">
+    <select v-model="artifact.stars">
       <option :value="Stars.S5">5 Star</option>
       <option :value="Stars.S4">4 Star</option>
       <option :value="Stars.S3">3 Star</option>
@@ -13,7 +13,7 @@
         <th>Level: {{ artLevel }}</th>
         <th>
           <input
-            v-model="artifactStore[type].level"
+            v-model="artifact.level"
             type="range"
             min="1"
             :max="maxLevel"
@@ -26,11 +26,11 @@
       <tr>
         <th>
           <select
-            v-model="artifactStore[type].mainStat"
-            :disabled="availableMainStats.length <= 1"
+            v-model="artifact.mainStat"
+            :disabled="props.availableMainStats.length <= 1"
           >
             <option
-              v-for="stat in availableMainStats"
+              v-for="stat in props.availableMainStats"
               :key="stat"
               :value="stat"
               :selected="artMainStat === stat"
@@ -52,24 +52,32 @@
 
   <div class="substat-container">
     <SubStatRow
-      :type="type"
-      :index="0"
-      :available-sub-stats="availableSubStats"
+      :sub-stat="firstSubstat"
+      :stars="artStars"
+      @change="firstSubstat = $event"
+      :available-rolls="availableRolls"
+      :available-sub-stats="props.availableSubStats"
     />
     <SubStatRow
-      :type="type"
-      :index="1"
-      :available-sub-stats="availableSubStats"
+      :sub-stat="secondSubstat"
+      :stars="artStars"
+      @change="secondSubstat = $event"
+      :available-rolls="availableRolls"
+      :available-sub-stats="props.availableSubStats"
     />
     <SubStatRow
-      :type="type"
-      :index="2"
-      :available-sub-stats="availableSubStats"
+      :sub-stat="thirdSubstat"
+      :stars="artStars"
+      @change="thirdSubstat = $event"
+      :available-rolls="availableRolls"
+      :available-sub-stats="props.availableSubStats"
     />
     <SubStatRow
-      :type="type"
-      :index="3"
-      :available-sub-stats="availableSubStats"
+      :sub-stat="forthSubstat"
+      :stars="artStars"
+      @change="forthSubstat = $event"
+      :available-rolls="availableRolls"
+      :available-sub-stats="props.availableSubStats"
     />
   </div>
 </template>
@@ -77,12 +85,14 @@
 <script setup lang="ts">
 import { ArtifactType } from "../../types/artifactType";
 import { isPercentage, Stats, toString } from "../../types/stats";
-import { computed, defineEmits } from "vue";
-import { Artifact, mainStatScalings } from "../../types/artifact";
+import { computed, defineEmits, defineProps, ref, watch } from "vue";
+import {
+  Artifact,
+  ArtifactSubStat,
+  mainStatScalings,
+} from "../../types/artifact";
 import { Stars } from "../../types/stars";
 import SubStatRow from "./SubStatRow.vue";
-import { useArtifactStore } from "../ArtifactStore";
-import { defineProps } from "vue";
 
 const props = defineProps<{
   type: ArtifactType;
@@ -90,15 +100,63 @@ const props = defineProps<{
   availableSubStats: Stats[];
 }>();
 
-defineEmits<{ artifact: Artifact }>();
+const emits = defineEmits<{ (e: "artifact", artifact: Artifact): void }>();
 
-const artifactStore = useArtifactStore();
+const artifact = ref<Artifact>({
+  type: props.type,
+  level: Stars.S1,
+  stars: Stars.S1,
+  mainStat: props.availableMainStats[0],
+  subStats: [],
+});
 
-const artLevel = computed(() => useArtifactStore()[props.type].level);
+const firstSubstat = ref<ArtifactSubStat>({
+  type: props.availableSubStats.filter(
+    (stat) => stat !== artifact.value.mainStat
+  )[0],
+  rolls: [],
+});
 
-const artStars = computed(() => useArtifactStore()[props.type].stars);
+const secondSubstat = ref<ArtifactSubStat>({
+  type: props.availableSubStats.filter(
+    (stat) =>
+      stat !== artifact.value.mainStat && stat !== firstSubstat.value.type
+  )[0],
+  rolls: [],
+});
 
-const artMainStat = computed(() => useArtifactStore()[props.type].mainStat);
+const thirdSubstat = ref<ArtifactSubStat>({
+  type: props.availableSubStats.filter(
+    (stat) =>
+      stat !== artifact.value.mainStat &&
+      stat !== firstSubstat.value.type &&
+      stat !== secondSubstat.value.type
+  )[0],
+  rolls: [],
+});
+
+const forthSubstat = ref<ArtifactSubStat>({
+  type: props.availableSubStats.filter(
+    (stat) =>
+      stat !== artifact.value.mainStat &&
+      stat !== firstSubstat.value.type &&
+      stat !== secondSubstat.value.type &&
+      stat !== thirdSubstat.value.type
+  )[0],
+  rolls: [],
+});
+
+const availableRolls = ref(4);
+
+watch(artifact.value, () => emits("artifact", artifact.value), {
+  flush: "sync",
+});
+
+const artLevel = computed(() => artifact.value.level);
+
+const artStars = computed(() => artifact.value.stars);
+
+const artMainStat = computed(() => artifact.value.mainStat);
 
 const maxLevel = computed(() => {
   switch (artStars.value) {

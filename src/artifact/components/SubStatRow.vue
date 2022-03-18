@@ -1,31 +1,18 @@
 <template>
   <div class="row">
-    <select
-      v-model="useArtifactStore()[type].subStats[index].type"
-      class="select"
-      @input="resetSelectedRoll"
-    >
+    <select v-model="type" class="select">
       <option
-        v-for="availableStat in availableSubStats"
+        v-for="availableStat in props.availableSubStats"
         :key="availableStat"
         :value="availableStat"
-        :selected="
-          useArtifactStore()[type].subStats[index].type === availableStat
-        "
-        :hidden="
-          usedSubStats.includes(availableStat) &&
-          !(artifactStore[type].subStats[index].type === availableStat)
-        "
+        :selected="type === availableStat"
+        :hidden="type === availableStat"
       >
         {{ toString(availableStat) }}
       </option>
     </select>
 
-    <select
-      v-model="artifactStore[type].subStats[index].rolls"
-      style="min-width: 0"
-      :disabled="useArtifactStore()[type].subStats[index].type === undefined"
-    >
+    <select v-model="rolls" style="min-width: 0" :disabled="type === undefined">
       <option
         v-for="roll in availableRolls"
         :key="JSON.stringify(roll)"
@@ -43,37 +30,35 @@
       type="range"
       min="1"
       max="6"
-      :disabled="useArtifactStore()[type].subStats[index].type === undefined"
-      @input="resetSelectedRoll"
+      :disabled="type === undefined"
     />
   </div>
 </template>
 
 <script setup lang="ts">
 import { isPercentage, Stats, toString } from "../../types/stats";
-import { useArtifactStore } from "../ArtifactStore";
 import { computed, ref } from "vue";
-import { Artifact, subStatScalings } from "../../types/artifact";
+import {
+  Artifact,
+  ArtifactSubStat,
+  subStatScalings,
+} from "../../types/artifact";
 import { ArtifactType } from "../../types/artifactType";
 import add from "../../util/add";
 import { defineProps } from "vue";
+import { Stars } from "../../types/stars";
 
 const props = defineProps<{
-  type: ArtifactType;
+  subStat: ArtifactSubStat;
+  stars: Stars;
   availableSubStats: Stats[];
-  index: number;
+  availableRolls: number;
 }>();
 
-const artifactStore = useArtifactStore();
+defineEmits<{ (e: "update", subStat: ArtifactSubStat): void }>();
 
-const usedSubStats = computed(() => {
-  const artifact: Artifact = useArtifactStore()[props.type];
-  return [artifact.mainStat, ...artifact.subStats.map((s) => s.type)];
-});
-
-const rolls = ref(
-  artifactStore[props.type].subStats[props.index].rolls?.length ?? 1
-);
+const type = ref(props.subStat.type);
+const rolls = ref(props.subStat.rolls?.length ?? 1);
 
 const availableRolls = computed(() => {
   return removeDuplicates(possibleValues(rolls.value).sort()).sort(
@@ -81,9 +66,7 @@ const availableRolls = computed(() => {
   );
 });
 
-const isPerc = computed(() =>
-  isPercentage(useArtifactStore()[props.type].subStats[props.index].type)
-);
+const isPerc = computed(() => isPercentage(type.value));
 
 const substatRolls = [0.7, 0.8, 0.9, 1.0];
 
@@ -114,17 +97,9 @@ function possibleValues(n: number): number[][] {
 }
 
 const rollsValue = (rolls: number[]) => {
-  const statScaling =
-    subStatScalings[artifactStore[props.type].stars]?.[
-      artifactStore[props.type].subStats[props.index].type
-    ] ?? 0;
+  const statScaling = subStatScalings[props.stars]?.[type.value] ?? 0;
   return rolls.map((n) => n * statScaling).reduce(add, 0);
 };
-
-function resetSelectedRoll() {
-  artifactStore[props.type].subStats[props.index].rolls =
-    availableRolls.value[0];
-}
 </script>
 
 <style scoped>

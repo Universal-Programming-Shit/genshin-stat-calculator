@@ -3,6 +3,7 @@
     :type="ArtifactType.GOBLET"
     :available-main-stats="mainstats"
     :available-sub-stats="substats"
+    @artifact="updateArtifact"
   />
 </template>
 
@@ -11,6 +12,15 @@ import ArtifactSelection from "./ArtifactSelection.vue";
 import { ArtifactType } from "../../types/artifactType";
 import { Stats } from "../../types/stats";
 import { ref } from "vue";
+import { useArtifactStore } from "../ArtifactStore";
+import { Artifact } from "../../types/artifact";
+
+const artifactStore = useArtifactStore();
+
+function updateArtifact(artifact: Artifact) {
+  console.log("Art", JSON.stringify(artifact));
+  artifactStore[ArtifactType.GOBLET] = artifact;
+}
 
 const mainstats = ref([
   Stats.HP_PERC,

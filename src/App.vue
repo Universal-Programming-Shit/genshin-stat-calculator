@@ -19,11 +19,9 @@ import Artifact from "./artifact/Artifact.vue";
 <style scoped>
 .app {
   flex-grow: 1;
-  display: grid;
+  display: flex;
   gap: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(35vw, 1fr));
-  grid-template-rows: masonry;
-  masonry-auto-flow: positioned;
+  flex-direction: column;
 }
 
 .app * {
@@ -48,6 +46,10 @@ import Artifact from "./artifact/Artifact.vue";
 @media screen and (orientation: landscape) {
   .app-container {
     flex-direction: row;
+  }
+  .app {
+    flex-direction: row;
+    flex-flow: wrap;
   }
 }
 </style>
