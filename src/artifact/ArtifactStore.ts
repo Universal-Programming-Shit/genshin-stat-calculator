@@ -6,38 +6,59 @@ import add from "../util/add";
 import { Stars } from "../types/stars";
 import { useStorage } from "@vueuse/core";
 
+const calculateStats = (type: Stats, artifacts: Artifact[]): number => {
+  const mainStats = artifacts
+    ?.filter((a) => a.mainStat === type)
+    .map((a) => mainStatScalings[a.stars]?.[a.mainStat]?.(a.level) ?? 0)
+    .reduce(add, 0);
+  const subStats = artifacts
+    .flatMap((a) =>
+      a.subStats
+        .filter((substat) => substat.type === type)
+        .map((substat) =>
+          substat.rolls
+            .map(
+              (roll) => roll * (subStatScalings[a.stars]?.[substat.type] ?? 0)
+            )
+            .reduce(add, 0)
+        )
+    )
+    .reduce(add, 0);
+  return mainStats + subStats ?? 0;
+};
+
 export const useArtifactStore = defineStore("artifact", {
   state: () =>
     useStorage("artifact", {
-      flower: {
+      [ArtifactType.FLOWER]: {
         type: ArtifactType.FLOWER,
         stars: Stars.S5,
         level: 1,
         mainStat: Stats.HP_FLAT,
         subStats: [{}, {}, {}, {}],
       } as Artifact,
-      feather: {
+      [ArtifactType.FEATHER]: {
         type: ArtifactType.FEATHER,
         stars: Stars.S5,
         level: 1,
         mainStat: Stats.ATTACK_FLAT,
         subStats: [{}, {}, {}, {}],
       } as Artifact,
-      sands: {
+      [ArtifactType.SANDS]: {
         type: ArtifactType.SANDS,
         stars: Stars.S5,
         level: 1,
         mainStat: Stats.HP_PERC,
         subStats: [{}, {}, {}, {}],
       } as Artifact,
-      goblet: {
+      [ArtifactType.GOBLET]: {
         type: ArtifactType.GOBLET,
         stars: Stars.S5,
         level: 1,
         mainStat: Stats.HP_PERC,
         subStats: [{}, {}, {}, {}],
       } as Artifact,
-      circlet: {
+      [ArtifactType.CIRCLET]: {
         type: ArtifactType.CIRCLET,
         stars: Stars.S5,
         level: 1,
@@ -46,51 +67,53 @@ export const useArtifactStore = defineStore("artifact", {
       } as Artifact,
     }),
   getters: {
-    artifacts: (state): Artifact[] => [
-      state.flower,
-      state.feather,
-      state.sands,
-      state.goblet,
-      state.circlet,
-    ],
-    [ArtifactType.FLOWER]: (state) => state.flower,
-    [ArtifactType.FEATHER]: (state) => state.feather,
-    [ArtifactType.SANDS]: (state) => state.sands,
-    [ArtifactType.GOBLET]: (state) => state.goblet,
-    [ArtifactType.CIRCLET]: (state) => state.circlet,
-    atkPerc: (state) => state.calculateStats(Stats.ATTACK_PERC),
-    atkFlat: (state) => state.calculateStats(Stats.ATTACK_FLAT),
-    defPerc: (state) => state.calculateStats(Stats.DEF_PERC),
-    defFlat: (state) => state.calculateStats(Stats.DEF_FLAT),
-    critRate: (state) => state.calculateStats(Stats.CRIT_RATE),
-    critDamage: (state) => state.calculateStats(Stats.CRIT_DAMAGE),
-    hpPerc: (state) => state.calculateStats(Stats.HP_PERC),
-    hpFlat: (state) => state.calculateStats(Stats.HP_FLAT),
-    elementalDamage: (state) => state.calculateStats(Stats.ELEMENTAL_DAMAGE),
-    physicalDamage: (state) => state.calculateStats(Stats.PHYSICAL_DAMAGE),
-    energyRecharge: (state) => state.calculateStats(Stats.ENERGY_RECHARGE),
-    elementalMastery: (state) => state.calculateStats(Stats.ELEMENTAL_MASTERY),
-    healingBonus: (state) => state.calculateStats(Stats.HEALING_BONUS),
-  },
-  actions: {
-    calculateStats(type: Stats) {
-      const artifacts: Artifact[] = this.artifacts;
-      const mainStats = artifacts
-        .filter((a) => a.mainStat === type)
-        .map((a) => mainStatScalings[a.stars][a.mainStat](a.level))
-        .reduce(add, 0);
-      const subStats = artifacts
-        .flatMap((a) =>
-          a.subStats
-            .filter((substat) => substat.type === type)
-            .map((substat) =>
-              substat.rolls
-                .map((roll) => roll * subStatScalings[a.stars][substat.type])
-                .reduce(add, 0)
-            )
-        )
-        .reduce(add, 0);
-      return mainStats + subStats;
+    artifacts: function (state): Artifact[] {
+      return [
+        state[ArtifactType.FLOWER],
+        state[ArtifactType.FEATHER],
+        state[ArtifactType.SANDS],
+        state[ArtifactType.GOBLET],
+        state[ArtifactType.CIRCLET],
+      ];
+    },
+    atkPerc(): number {
+      return calculateStats(Stats.ATTACK_PERC, this.artifacts);
+    },
+    atkFlat(): number {
+      return calculateStats(Stats.ATTACK_FLAT, this.artifacts);
+    },
+    defPerc(): number {
+      return calculateStats(Stats.DEF_PERC, this.artifacts);
+    },
+    defFlat(): number {
+      return calculateStats(Stats.DEF_FLAT, this.artifacts);
+    },
+    critRate(): number {
+      return calculateStats(Stats.CRIT_RATE, this.artifacts);
+    },
+    critDamage(): number {
+      return calculateStats(Stats.CRIT_DAMAGE, this.artifacts);
+    },
+    hpPerc(): number {
+      return calculateStats(Stats.HP_PERC, this.artifacts);
+    },
+    hpFlat(): number {
+      return calculateStats(Stats.HP_FLAT, this.artifacts);
+    },
+    elementalDamage(): number {
+      return calculateStats(Stats.ELEMENTAL_DAMAGE, this.artifacts);
+    },
+    physicalDamage(): number {
+      return calculateStats(Stats.PHYSICAL_DAMAGE, this.artifacts);
+    },
+    energyRecharge(): number {
+      return calculateStats(Stats.ENERGY_RECHARGE, this.artifacts);
+    },
+    elementalMastery(): number {
+      return calculateStats(Stats.ELEMENTAL_MASTERY, this.artifacts);
+    },
+    healingBonus(): number {
+      return calculateStats(Stats.HEALING_BONUS, this.artifacts);
     },
   },
 });

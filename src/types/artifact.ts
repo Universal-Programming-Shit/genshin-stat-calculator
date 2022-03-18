@@ -17,7 +17,7 @@ export interface Artifact {
 }
 
 export const mainStatScalings: {
-  [key: Stars]: { [key: Stats]: (level: number) => number };
+  [key in Stars]?: { [key in Stats]?: (level: number) => number };
 } = {
   [Stars.S3]: {
     [Stats.HP_FLAT]: linearScaling(430, 1893, 12),
@@ -63,41 +63,42 @@ export const mainStatScalings: {
   },
 };
 
-export const subStatScalings: { [key: Stars]: { [key: Stats]: number } } = {
-  [Stars.S3]: {
-    [Stats.HP_FLAT]: 143.4,
-    [Stats.ATTACK_FLAT]: 9.34,
-    [Stats.DEF_FLAT]: 11.11,
-    [Stats.HP_PERC]: 0.035,
-    [Stats.ATTACK_PERC]: 0.035,
-    [Stats.DEF_PERC]: 0.0437,
-    [Stats.ELEMENTAL_MASTERY]: 13.99,
-    [Stats.ENERGY_RECHARGE]: 0.0389,
-    [Stats.CRIT_RATE]: 0.0233,
-    [Stats.CRIT_DAMAGE]: 0.0466,
-  },
-  [Stars.S4]: {
-    [Stats.HP_FLAT]: 239,
-    [Stats.ATTACK_FLAT]: 15.56,
-    [Stats.DEF_FLAT]: 18.52,
-    [Stats.HP_PERC]: 0.0466,
-    [Stats.ATTACK_PERC]: 0.0466,
-    [Stats.DEF_PERC]: 0.0583,
-    [Stats.ELEMENTAL_MASTERY]: 18.56,
-    [Stats.ENERGY_RECHARGE]: 0.0518,
-    [Stats.CRIT_RATE]: 0.0311,
-    [Stats.CRIT_DAMAGE]: 0.0622,
-  },
-  [Stars.S5]: {
-    [Stats.HP_FLAT]: 298.75,
-    [Stats.ATTACK_FLAT]: 19.45,
-    [Stats.DEF_FLAT]: 23.15,
-    [Stats.HP_PERC]: 0.0583,
-    [Stats.ATTACK_PERC]: 0.0583,
-    [Stats.DEF_PERC]: 0.0729,
-    [Stats.ELEMENTAL_MASTERY]: 23.31,
-    [Stats.ENERGY_RECHARGE]: 0.0648,
-    [Stats.CRIT_RATE]: 0.0389,
-    [Stats.CRIT_DAMAGE]: 0.0777,
-  },
-};
+export const subStatScalings: { [key in Stars]?: { [key in Stats]?: number } } =
+  {
+    [Stars.S3]: {
+      [Stats.HP_FLAT]: 143.4,
+      [Stats.ATTACK_FLAT]: 9.34,
+      [Stats.DEF_FLAT]: 11.11,
+      [Stats.HP_PERC]: 0.035,
+      [Stats.ATTACK_PERC]: 0.035,
+      [Stats.DEF_PERC]: 0.0437,
+      [Stats.ELEMENTAL_MASTERY]: 13.99,
+      [Stats.ENERGY_RECHARGE]: 0.0389,
+      [Stats.CRIT_RATE]: 0.0233,
+      [Stats.CRIT_DAMAGE]: 0.0466,
+    },
+    [Stars.S4]: {
+      [Stats.HP_FLAT]: 239,
+      [Stats.ATTACK_FLAT]: 15.56,
+      [Stats.DEF_FLAT]: 18.52,
+      [Stats.HP_PERC]: 0.0466,
+      [Stats.ATTACK_PERC]: 0.0466,
+      [Stats.DEF_PERC]: 0.0583,
+      [Stats.ELEMENTAL_MASTERY]: 18.56,
+      [Stats.ENERGY_RECHARGE]: 0.0518,
+      [Stats.CRIT_RATE]: 0.0311,
+      [Stats.CRIT_DAMAGE]: 0.0622,
+    },
+    [Stars.S5]: {
+      [Stats.HP_FLAT]: 298.75,
+      [Stats.ATTACK_FLAT]: 19.45,
+      [Stats.DEF_FLAT]: 23.15,
+      [Stats.HP_PERC]: 0.0583,
+      [Stats.ATTACK_PERC]: 0.0583,
+      [Stats.DEF_PERC]: 0.0729,
+      [Stats.ELEMENTAL_MASTERY]: 23.31,
+      [Stats.ENERGY_RECHARGE]: 0.0648,
+      [Stats.CRIT_RATE]: 0.0389,
+      [Stats.CRIT_DAMAGE]: 0.0777,
+    },
+  };

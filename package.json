@@ -2,7 +2,7 @@
   "name": "genshin-stat-calculator",
   "packageManager": "yarn@3.1.1",
   "scripts": {
-    "build": "vite build",
+    "build": "vue-tsc --noEmit && vite build",
     "serve remote": "vite serve --host",
     "serve": "vite serve",
     "lint": "eslint --ext .js,.ts,.vue src && prettier -c .",
@@ -18,7 +18,8 @@
     "prettier": "^2.6.0",
     "typescript": "^4.6.2",
     "vite": "^2.8.6",
-    "vue-eslint-parser": "^8.3.0"
+    "vue-eslint-parser": "^8.3.0",
+    "vue-tsc": "^0.33.2-patch.1"
   },
   "dependencies": {
     "@vueuse/core": "^7.7.1",

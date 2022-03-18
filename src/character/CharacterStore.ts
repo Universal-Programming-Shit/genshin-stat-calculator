@@ -12,20 +12,25 @@ export const useCharacterStore = defineStore("character", {
       selectedStatsIndex: 0,
     }),
   getters: {
-    name: (): string => this.selectedCharacter.name,
+    name(): string {
+      return this.selectedCharacter.name;
+    },
     selectedCharacter: (state): Character =>
       getElem(data, state.selectedCharacterIndex) ?? {
         name: "",
         stats: [],
       },
-    selectedStats: (state): CharacterStats =>
-      getElem(state.selectedCharacter.stats, state.selectedStatsIndex) ?? {
-        baseDef: 0,
-        ascentionStatValue: 0,
-        baseAtk: 0,
-        baseHp: 0,
-        ascensions: 0,
-        level: 0,
-      },
+    selectedStats(): CharacterStats {
+      return (
+        getElem(this.selectedCharacter.stats, this.selectedStatsIndex) ?? {
+          baseDef: 0,
+          ascentionStatValue: 0,
+          baseAtk: 0,
+          baseHp: 0,
+          ascensions: 0,
+          level: 0,
+        }
+      );
+    },
   },
 });

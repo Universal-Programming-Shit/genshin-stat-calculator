@@ -26,7 +26,11 @@
       style="min-width: 0"
       :disabled="useArtifactStore()[type].subStats[index].type === undefined"
     >
-      <option v-for="roll in availableRolls" :key="roll" :value="roll">
+      <option
+        v-for="roll in availableRolls"
+        :key="JSON.stringify(roll)"
+        :value="roll"
+      >
         {{
           isPerc
             ? (rollsValue(roll) * 100).toFixed(2)
@@ -111,9 +115,9 @@ function possibleValues(n: number): number[][] {
 
 const rollsValue = (rolls: number[]) => {
   const statScaling =
-    subStatScalings[artifactStore[props.type].stars][
+    subStatScalings[artifactStore[props.type].stars]?.[
       artifactStore[props.type].subStats[props.index].type
-    ];
+    ] ?? 0;
   return rolls.map((n) => n * statScaling).reduce(add, 0);
 };
 

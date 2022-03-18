@@ -7,12 +7,12 @@ import { useArtifactStore } from "./artifact/ArtifactStore";
 export const useStatStore = defineStore("stat", {
   state: () => ({}),
   getters: {
-    hp: () => {
+    hp: (): number => {
       const characterStore = useCharacterStore();
       const weaponStore = useWeaponStore();
       const artifactStore = useArtifactStore();
 
-      const base = characterStore.selectedStats.baseHp;
+      const base = characterStore.selectedStats.baseHp ?? 0;
 
       const characterMult =
         characterStore.selectedCharacter.ascensionStat === LevelUpStat.HP
@@ -23,13 +23,13 @@ export const useStatStore = defineStore("stat", {
           ? weaponStore.selectedStats.subStatValue
           : 0;
       const artifactMult = artifactStore.hpPerc ?? 0;
-      const totalMult = 1 + characterMult + weaponMult + artifactMult;
+      const totalMult = 1 + characterMult + weaponMult + artifactMult ?? 0;
 
-      const flat = artifactStore.hpFlat;
+      const flat = artifactStore.hpFlat ?? 0;
 
-      return base * totalMult + flat;
+      return base * totalMult + flat ?? 0;
     },
-    attack: () => {
+    attack: (): number => {
       const characterStore = useCharacterStore();
       const weaponStore = useWeaponStore();
       const artifactStore = useArtifactStore();
@@ -50,9 +50,9 @@ export const useStatStore = defineStore("stat", {
 
       const flat = artifactStore.atkFlat;
 
-      return base * totalMult + flat;
+      return base * totalMult + flat ?? 0;
     },
-    defense: () => {
+    defense: (): number => {
       const characterStore = useCharacterStore();
       const weaponStore = useWeaponStore();
       const artifactStore = useArtifactStore();
@@ -71,9 +71,9 @@ export const useStatStore = defineStore("stat", {
 
       const flat = artifactStore.defFlat;
 
-      return base * totalMult + flat;
+      return base * totalMult + flat ?? 0;
     },
-    elementalMastery: () => {
+    elementalMastery: (): number => {
       const characterStore = useCharacterStore();
       const weaponStore = useWeaponStore();
       const artifactStore = useArtifactStore();
@@ -88,9 +88,9 @@ export const useStatStore = defineStore("stat", {
           ? weaponStore.selectedStats.subStatValue
           : 0;
 
-      return characterFlat + weaponFlat + artifactStore.elementalMastery;
+      return characterFlat + weaponFlat + artifactStore.elementalMastery ?? 0;
     },
-    energyRecharge: () => {
+    energyRecharge: (): number => {
       const characterStore = useCharacterStore();
       const weaponStore = useWeaponStore();
       const artifactStore = useArtifactStore();
@@ -107,9 +107,9 @@ export const useStatStore = defineStore("stat", {
       const totalMult =
         0.05 + characterMult + weaponMult + artifactStore.energyRecharge;
 
-      return totalMult;
+      return totalMult ?? 0;
     },
-    critRate: () => {
+    critRate: (): number => {
       const characterStore = useCharacterStore();
       const weaponStore = useWeaponStore();
       const artifactStore = useArtifactStore();
@@ -125,9 +125,9 @@ export const useStatStore = defineStore("stat", {
       const totalMult =
         0.05 + characterMult + weaponMult + artifactStore.critRate;
 
-      return totalMult;
+      return totalMult ?? 0;
     },
-    critDamage: () => {
+    critDamage: (): number => {
       const characterStore = useCharacterStore();
       const weaponStore = useWeaponStore();
       const artifactStore = useArtifactStore();
@@ -144,9 +144,9 @@ export const useStatStore = defineStore("stat", {
       const totalMult =
         0.5 + characterMult + weaponMult + artifactStore.critDamage;
 
-      return totalMult;
+      return totalMult ?? 0;
     },
-    elementalDamage: () => {
+    elementalDamage: (): number => {
       const characterStore = useCharacterStore();
       const artifactStore = useArtifactStore();
 
@@ -157,9 +157,9 @@ export const useStatStore = defineStore("stat", {
           : 0;
       const totalMult = characterMult + artifactStore.elementalDamage;
 
-      return totalMult;
+      return totalMult ?? 0;
     },
-    healingBonus: () => {
+    healingBonus: (): number => {
       const characterStore = useCharacterStore();
       const artifactStore = useArtifactStore();
 
@@ -170,7 +170,7 @@ export const useStatStore = defineStore("stat", {
           : 0;
       const totalMult = characterMult + artifactStore.healingBonus;
 
-      return totalMult;
+      return totalMult ?? 0;
     },
   },
 });

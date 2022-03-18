@@ -14,21 +14,27 @@ export const useWeaponStore = defineStore("weapon", {
       selectedStatIndex: 0,
     }),
   getters: {
-    availableWeapons: (): Weapon[] => {
+    availableWeapons(): Weapon[] {
       return data[useCharacterStore().selectedCharacter.weapon] ?? [];
     },
-    selectedWeapon: (state): Weapon =>
-      getElem(state.availableWeapons, state.selectedWeaponIndex) ?? {
-        name: "UNKNOWN",
-        subStat: -1 as LevelUpStat,
-        type: -1 as WeaponType,
-        stats: [],
-      },
-    selectedStats: (state): WeaponStats =>
-      getElem(state.selectedWeapon.stats, state.selectedStatIndex) ?? {
-        flatAttack: 0,
-        subStatValue: 0,
-        level: 0,
-      },
+    selectedWeapon(): Weapon {
+      return (
+        getElem(this.availableWeapons, this.selectedWeaponIndex) ?? {
+          name: "UNKNOWN",
+          subStat: LevelUpStat.DEFENSE,
+          type: WeaponType.SWORD,
+          stats: [],
+        }
+      );
+    },
+    selectedStats(): WeaponStats {
+      return (
+        getElem(this.selectedWeapon.stats, this.selectedStatIndex) ?? {
+          flatAttack: 0,
+          subStatValue: 0,
+          level: 0,
+        }
+      );
+    },
   },
 });

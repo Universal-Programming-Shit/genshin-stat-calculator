@@ -5,7 +5,7 @@
  * @param x point on the line
  */
 export default (b: number, y: number, x: number) => {
-  return (level) => {
+  return (level: number) => {
     return ((y - b) / x) * level + b;
   };
 };

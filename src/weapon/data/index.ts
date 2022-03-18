@@ -12,4 +12,4 @@ export default {
   [WeaponType.CATALYST]: catalysts,
   [WeaponType.CLAYMORE]: claymores,
   [WeaponType.POLEARM]: polearms,
-} as { [key: WeaponType]: Weapon[] };
+} as { [key in WeaponType]: Weapon[] };

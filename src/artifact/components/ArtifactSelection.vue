@@ -10,7 +10,7 @@
   <table>
     <thead>
       <tr>
-        <th>Level: {{ level }}</th>
+        <th>Level: {{ artLevel }}</th>
         <th>
           <input
             v-model="artifactStore[type].level"
@@ -33,13 +33,13 @@
               v-for="stat in availableMainStats"
               :key="stat"
               :value="stat"
-              :selected="mainStat === stat"
+              :selected="artMainStat === stat"
             >
               {{ toString(stat) }}
             </option>
           </select>
         </th>
-        <th>
+        <th v-if="mainStatValue">
           {{
             isPerc
               ? (mainStatValue * 100).toFixed(2)
@@ -94,14 +94,14 @@ defineEmits<{ artifact: Artifact }>();
 
 const artifactStore = useArtifactStore();
 
-const level = computed(() => useArtifactStore()[props.type].level);
+const artLevel = computed(() => useArtifactStore()[props.type].level);
 
-const stars = computed(() => useArtifactStore()[props.type].stars);
+const artStars = computed(() => useArtifactStore()[props.type].stars);
 
-const mainStat = computed(() => useArtifactStore()[props.type].mainStat);
+const artMainStat = computed(() => useArtifactStore()[props.type].mainStat);
 
 const maxLevel = computed(() => {
-  switch (stars.value) {
+  switch (artStars.value) {
     case Stars.S1:
       return 4;
     case Stars.S2:
@@ -113,14 +113,14 @@ const maxLevel = computed(() => {
     case Stars.S5:
       return 20;
     default:
-      return 0;
+      return 4;
   }
 });
 
-const isPerc = computed(() => isPercentage(mainStat.value));
+const isPerc = computed(() => isPercentage(artMainStat.value));
 
 const mainStatValue = computed(() =>
-  mainStatScalings[stars.value][mainStat.value](level.value)
+  mainStatScalings[artStars.value]?.[artMainStat.value]?.(artLevel.value)
 );
 </script>
 

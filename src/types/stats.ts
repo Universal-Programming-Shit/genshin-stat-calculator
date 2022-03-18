@@ -14,7 +14,7 @@ export enum Stats {
   PHYSICAL_DAMAGE,
 }
 
-export const isPercentage = (stat) =>
+export const isPercentage = (stat: Stats) =>
   stat === Stats.CRIT_RATE ||
   stat === Stats.CRIT_DAMAGE ||
   stat === Stats.ELEMENTAL_DAMAGE ||
