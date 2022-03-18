@@ -11,12 +11,17 @@
         {{ toString(availableStat) }}
       </option>
     </select>
-
-    <select v-model="rolls" style="min-width: 0" :disabled="type === undefined">
+    <select
+      :disabled="type === undefined"
+      :value="selectedRolls"
+      style="min-width: 0"
+      @update:modelValue="rolls = $event"
+    >
       <option
-        v-for="roll in availableRolls"
+        v-for="(roll, i) in availableRollsList"
         :key="JSON.stringify(roll)"
-        :value="roll"
+        :value="i"
+        :selected="selectedRolls === i"
       >
         {{
           isPerc
@@ -26,11 +31,11 @@
       </option>
     </select>
     <input
-      v-model="rollAmount"
+      v-model="rollAmountInput"
       type="range"
-      min="1"
-      max="6"
-      :disabled="type === undefined"
+      :step="1"
+      :min="0"
+      :max="props.availableRolls"
     />
   </div>
 </template>
@@ -53,13 +58,19 @@ const props = defineProps<{
 defineEmits<{ (e: "update:modelValue", subStat: ArtifactSubStat): void }>();
 
 const type = ref<Stats>(props.modelValue.type);
-const rollAmount = ref<number>(props.modelValue.rolls?.length ?? 1);
-const rolls = ref<number>(props.modelValue.rolls[0] ?? []);
+const rollAmountInput = ref<string>(`${props.modelValue.rolls?.length}` ?? "0");
+const rollAmount = computed(() => Number.parseInt(rollAmountInput.value, 10));
+const rolls = ref<number>(0);
+const selectedRolls = computed<number>(() => {
+  return rolls.value >= availableRollsList.value.length
+    ? availableRollsList.value.length - 1
+    : rolls.value;
+});
 
-const availableRolls = computed<number[][]>(() => {
-  return removeDuplicates(possibleValues(rollAmount.value+props.baseRolls).sort()).sort(
-    (a, b) => a.reduce(add, 0) - b.reduce(add, 0)
-  );
+const availableRollsList = computed<number[][]>(() => {
+  return removeDuplicates(
+    possibleValues(rollAmount.value + props.baseRolls).sort()
+  ).sort((a, b) => a.reduce(add, 0) - b.reduce(add, 0));
 });
 
 const isPerc = computed(() => isPercentage(type.value));
