@@ -7,75 +7,64 @@
       <option :value="Stars.S3">3 Star</option>
     </select>
   </div>
-  <table>
-    <thead>
-      <tr>
-        <th>Level: {{ artLevel }}</th>
-        <th>
-          <input
-            v-model="artifact.level"
-            type="range"
-            min="1"
-            :max="maxLevel"
-          />
-        </th>
-      </tr>
-    </thead>
-
-    <thead>
-      <tr>
-        <th>
-          <select
-            v-model="artifact.mainStat"
-            :disabled="props.availableMainStats.length <= 1"
-          >
-            <option
-              v-for="stat in props.availableMainStats"
-              :key="stat"
-              :value="stat"
-              :selected="artMainStat === stat"
-            >
-              {{ toString(stat) }}
-            </option>
-          </select>
-        </th>
-        <th v-if="mainStatValue">
-          {{
-            isPerc
-              ? (mainStatValue * 100).toFixed(2)
-              : mainStatValue.toFixed(0)
-          }}{{ isPerc ? "%" : "" }}
-        </th>
-      </tr>
-    </thead>
-  </table>
+  <div class="artifact-options">
+    <div>Level: {{ artLevel }}</div>
+    <div>
+      <label>
+        More rolls
+        <input type="checkbox" v-model="moreRolls" />
+      </label>
+    </div>
+    <div>
+      <input v-model="artifact.level" type="range" min="1" :max="maxLevel" />
+    </div>
+    <div>
+      <select
+        v-model="artifact.mainStat"
+        :disabled="props.availableMainStats.length <= 1"
+      >
+        <option
+          v-for="stat in props.availableMainStats"
+          :key="stat"
+          :value="stat"
+          :selected="artMainStat === stat"
+        >
+          {{ toString(stat) }}
+        </option>
+      </select>
+    </div>
+    <div v-if="mainStatValue">
+      {{ isPerc ? (mainStatValue * 100).toFixed(2) : mainStatValue.toFixed(0)
+      }}{{ isPerc ? "%" : "" }}
+    </div>
+  </div>
 
   <div class="substat-container">
     <SubStatRow
-      :sub-stat="firstSubstat"
+      v-model="firstSubstat"
       :stars="artStars"
-      @change="firstSubstat = $event"
+      :base-rolls="artStars >= 3 || (artStars === 2 && moreRolls) ? 1 : 0"
       :available-rolls="availableRolls"
       :available-sub-stats="props.availableSubStats"
     />
     <SubStatRow
-      :sub-stat="secondSubstat"
+      v-model="secondSubstat"
       :stars="artStars"
-      @change="secondSubstat = $event"
+      :base-rolls="artStars >= 4 || (artStars === 3 && moreRolls) ? 1 : 0"
       :available-rolls="availableRolls"
       :available-sub-stats="props.availableSubStats"
     />
     <SubStatRow
-      :sub-stat="thirdSubstat"
+      v-model="thirdSubstat"
       :stars="artStars"
-      @change="thirdSubstat = $event"
+      :base-rolls="artStars === 5 || (artStars === 4 && moreRolls) ? 1 : 0"
       :available-rolls="availableRolls"
       :available-sub-stats="props.availableSubStats"
     />
     <SubStatRow
-      :sub-stat="forthSubstat"
+      v-model="forthSubstat"
       :stars="artStars"
-      @change="forthSubstat = $event"
+      :base-rolls="artStars === 5 && moreRolls ? 1 : 0"
       :available-rolls="availableRolls"
       :available-sub-stats="props.availableSubStats"
     />
@@ -101,6 +90,8 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{ (e: "artifact", artifact: Artifact): void }>();
+
+const moreRolls = ref(false);
 
 const artifact = ref<Artifact>({
   type: props.type,
@@ -154,7 +145,7 @@ watch(artifact.value, () => emits("artifact", artifact.value), {
 
 const artLevel = computed(() => artifact.value.level);
 
-const artStars = computed(() => artifact.value.stars);
+const artStars = computed<Stars>(() => artifact.value.stars);
 
 const artMainStat = computed(() => artifact.value.mainStat);
 
@@ -229,5 +220,12 @@ tr td:last-child {
 
 .substat-container * {
   margin: 4px;
+}
+
+.artifact-options {
+  margin: 4px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
 }
 </style>
