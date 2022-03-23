@@ -4,7 +4,7 @@
     {{ availableRolls }}
     <select v-model="type" class="select">
       <option
-        v-for="availableStat in props.availableSubStats"
+        v-for="availableStat in substats"
         :key="availableStat"
         :value="availableStat"
         :selected="type === availableStat"
@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
 import { isPercentage, Stats, toString } from "../../types/stats";
-import { computed, defineEmits, defineProps, ref } from "vue";
+import { computed, defineEmits, defineProps, ref, watchEffect } from "vue";
 import { ArtifactSubStat, subStatScalings } from "../../types/artifact";
 import add from "../../util/add";
 import { Stars } from "../../types/stars";
@@ -57,7 +57,11 @@ const props = defineProps<{
   baseRolls: number;
 }>();
 
-defineEmits<{ (e: "update:modelValue", subStat: ArtifactSubStat): void }>();
+const emits = defineEmits<{ (e: "update:modelValue", subStat: ArtifactSubStat): void }>();
+
+const substats = computed<Stats[]>(() => [
+  ...(props.baseRolls === 0 ? [Stats.NONE] : props.availableSubStats),
+]);
 
 const type = ref<Stats>(props.modelValue.type);
 const rollAmountInput = ref<string>(`${props.modelValue.rolls?.length}` ?? "0");
@@ -68,6 +72,7 @@ const selectedRolls = computed<number>(() => {
     ? availableRollsList.value.length - 1
     : rolls.value;
 });
+
 
 const availableRollsList = computed<number[][]>(() => {
   return removeDuplicates(
@@ -109,6 +114,16 @@ const rollsValue = (rolls: number[]) => {
   const statScaling = subStatScalings[props.stars]?.[type.value] ?? 0;
   return rolls.map((n) => n * statScaling).reduce(add, 0);
 };
+
+
+watchEffect(
+    () => {
+      type.value = substats.value.includes(type.value)
+          ? type.value
+          : substats.value[0];
+      emits("update:modelValue", {type: type.value, rolls: availableRollsList.value[selectedRolls.value]})
+    }
+);
 </script>
 
 <style scoped>

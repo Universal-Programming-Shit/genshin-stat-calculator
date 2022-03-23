@@ -33,7 +33,6 @@ const mainstats = ref([
 ]);
 
 const substats = [
-  Stats.NONE,
   Stats.ENERGY_RECHARGE,
   Stats.HP_PERC,
   Stats.HP_FLAT,

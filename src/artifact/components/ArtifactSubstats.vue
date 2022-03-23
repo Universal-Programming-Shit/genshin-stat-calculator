@@ -11,28 +11,28 @@
       :stars="stars"
       :base-rolls="firstRequiredRolls"
       :available-rolls="firstAvailableRolls"
-      :available-sub-stats="availableSubStats"
+      :available-sub-stats="firstAvailableSubstats"
     />
     <SubStatRow
       v-model="secondSubstat"
       :stars="stars"
       :base-rolls="secondRequiredRolls"
       :available-rolls="secondAvailableRolls"
-      :available-sub-stats="availableSubStats"
+      :available-sub-stats="secondAvailableSubstats"
     />
     <SubStatRow
       v-model="thirdSubstat"
       :stars="stars"
       :base-rolls="thirdRequiredRolls"
       :available-rolls="thirdAvailableRolls"
-      :available-sub-stats="availableSubStats"
+      :available-sub-stats="thirdAvailableSubstats"
     />
     <SubStatRow
       v-model="forthSubstat"
       :stars="stars"
       :base-rolls="forthRequiredRolls"
       :available-rolls="forthAvailableRolls"
-      :available-sub-stats="availableSubStats"
+      :available-sub-stats="forthAvailableSubstats"
     />
   </div>
 </template>
@@ -113,7 +113,6 @@ const forthRequiredRolls = computed<number>(() =>
     : 0
 );
 
-
 const firstAvailableRolls = computed(() =>
   Math.max(
     availableRolls.value -
@@ -166,6 +165,39 @@ const forthAvailableRolls = computed(() =>
     0
   )
 );
+
+const firstAvailableSubstats = computed(() => {
+  return props.availableSubStats.filter(
+    (stat) =>
+      stat !== secondSubstat.value.type &&
+      stat !== thirdSubstat.value.type &&
+      stat !== forthSubstat.value.type
+  );
+});
+const secondAvailableSubstats = computed(() => {
+  return props.availableSubStats.filter(
+    (stat) =>
+      stat !== firstSubstat.value.type &&
+      stat !== thirdSubstat.value.type &&
+      stat !== forthSubstat.value.type
+  );
+});
+const thirdAvailableSubstats = computed(() => {
+  return props.availableSubStats.filter(
+    (stat) =>
+      stat !== secondSubstat.value.type &&
+      stat !== firstSubstat.value.type &&
+      stat !== forthSubstat.value.type
+  );
+});
+const forthAvailableSubstats = computed(() => {
+  return props.availableSubStats.filter(
+    (stat) =>
+      stat !== secondSubstat.value.type &&
+      stat !== thirdSubstat.value.type &&
+      stat !== firstSubstat.value.type
+  );
+});
 </script>
 
 <style scoped>
