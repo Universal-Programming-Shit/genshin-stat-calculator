@@ -46,7 +46,9 @@
     <ArtifactSubstats
       :level="artLevel"
       :stars="artStars"
-      :available-sub-stats="props.availableSubStats.filter(value => value !== artMainStat)"
+      :available-sub-stats="
+        props.availableSubStats.filter((value) => value !== artMainStat)
+      "
     />
   </div>
 </template>

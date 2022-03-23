@@ -1,7 +1,5 @@
 <template>
   <div class="row">
-    {{ baseRolls }}
-    {{ availableRolls }}
     <select v-model="type" class="select">
       <option
         v-for="availableStat in substats"
@@ -34,6 +32,7 @@
     </select>
     <input
       v-model="rollAmountInput"
+      :disabled="!availableRolls"
       type="range"
       :step="1"
       :min="0"
@@ -57,7 +56,8 @@ const props = defineProps<{
   baseRolls: number;
 }>();
 
-const emits = defineEmits<{ (e: "update:modelValue", subStat: ArtifactSubStat): void }>();
+const emits =
+  defineEmits<{ (e: "update:modelValue", subStat: ArtifactSubStat): void }>();
 
 const substats = computed<Stats[]>(() => [
   ...(props.baseRolls === 0 ? [Stats.NONE] : props.availableSubStats),
@@ -72,7 +72,6 @@ const selectedRolls = computed<number>(() => {
     ? availableRollsList.value.length - 1
     : rolls.value;
 });
-
 
 const availableRollsList = computed<number[][]>(() => {
   return removeDuplicates(
@@ -115,15 +114,20 @@ const rollsValue = (rolls: number[]) => {
   return rolls.map((n) => n * statScaling).reduce(add, 0);
 };
 
-
-watchEffect(
-    () => {
-      type.value = substats.value.includes(type.value)
-          ? type.value
-          : substats.value[0];
-      emits("update:modelValue", {type: type.value, rolls: availableRollsList.value[selectedRolls.value]})
-    }
-);
+/**
+ * TODO
+ * improve performance.
+ * only call watcher when necessary
+ */
+watchEffect(() => {
+  type.value = substats.value.includes(type.value)
+    ? type.value
+    : substats.value[0];
+  emits("update:modelValue", {
+    type: type.value,
+    rolls: availableRollsList.value[selectedRolls.value],
+  });
+});
 </script>
 
 <style scoped>
