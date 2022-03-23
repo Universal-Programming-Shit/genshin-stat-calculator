@@ -1,5 +1,7 @@
 <template>
   <div class="row">
+    {{ baseRolls }}
+    {{ availableRolls }}
     <select v-model="type" class="select">
       <option
         v-for="availableStat in props.availableSubStats"
@@ -42,7 +44,7 @@
 
 <script setup lang="ts">
 import { isPercentage, Stats, toString } from "../../types/stats";
-import { computed, defineProps, ref } from "vue";
+import { computed, defineEmits, defineProps, ref } from "vue";
 import { ArtifactSubStat, subStatScalings } from "../../types/artifact";
 import add from "../../util/add";
 import { Stars } from "../../types/stars";
@@ -73,7 +75,7 @@ const availableRollsList = computed<number[][]>(() => {
   ).sort((a, b) => a.reduce(add, 0) - b.reduce(add, 0));
 });
 
-const isPerc = computed(() => isPercentage(type.value));
+const isPerc = computed(() => (type.value ? isPercentage(type.value) : false));
 
 const substatRolls = [0.7, 0.8, 0.9, 1.0];
 

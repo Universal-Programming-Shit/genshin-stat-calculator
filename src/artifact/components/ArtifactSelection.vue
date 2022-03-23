@@ -5,16 +5,12 @@
       <option :value="Stars.S5">5 Star</option>
       <option :value="Stars.S4">4 Star</option>
       <option :value="Stars.S3">3 Star</option>
+      <option :value="Stars.S2">2 Star</option>
+      <option :value="Stars.S1">1 Star</option>
     </select>
   </div>
   <div class="artifact-options">
     <div>Level: {{ artLevel }}</div>
-    <div>
-      <label>
-        More rolls
-        <input type="checkbox" v-model="moreRolls" />
-      </label>
-    </div>
     <div>
       <input v-model="artifact.level" type="range" min="1" :max="maxLevel" />
     </div>
@@ -33,7 +29,7 @@
         </option>
       </select>
     </div>
-    <div v-if="mainStatValue">
+    <div>
       {{ isPerc ? (mainStatValue * 100).toFixed(2) : mainStatValue.toFixed(0)
       }}{{ isPerc ? "%" : "" }}
     </div>
@@ -95,45 +91,29 @@ const moreRolls = ref(false);
 
 const artifact = ref<Artifact>({
   type: props.type,
-  level: Stars.S1,
+  level: 1,
   stars: Stars.S1,
   mainStat: props.availableMainStats[0],
   subStats: [],
 });
 
 const firstSubstat = ref<ArtifactSubStat>({
-  type: props.availableSubStats.filter(
-    (stat) => stat !== artifact.value.mainStat
-  )[0],
+  type: undefined as unknown as Stats,
   rolls: [],
 });
 
 const secondSubstat = ref<ArtifactSubStat>({
-  type: props.availableSubStats.filter(
-    (stat) =>
-      stat !== artifact.value.mainStat && stat !== firstSubstat.value.type
-  )[0],
+  type: undefined as unknown as Stats,
   rolls: [],
 });
 
 const thirdSubstat = ref<ArtifactSubStat>({
-  type: props.availableSubStats.filter(
-    (stat) =>
-      stat !== artifact.value.mainStat &&
-      stat !== firstSubstat.value.type &&
-      stat !== secondSubstat.value.type
-  )[0],
+  type: undefined as unknown as Stats,
   rolls: [],
 });
 
 const forthSubstat = ref<ArtifactSubStat>({
-  type: props.availableSubStats.filter(
-    (stat) =>
-      stat !== artifact.value.mainStat &&
-      stat !== firstSubstat.value.type &&
-      stat !== secondSubstat.value.type &&
-      stat !== thirdSubstat.value.type
-  )[0],
+  type: undefined as unknown as Stats,
   rolls: [],
 });
 
@@ -168,23 +148,26 @@ const maxLevel = computed(() => {
 
 const isPerc = computed(() => isPercentage(artMainStat.value));
 
-const mainStatValue = computed(() =>
-  mainStatScalings[artStars.value]?.[artMainStat.value]?.(artLevel.value)
+const mainStatValue = computed(
+  () =>
+    mainStatScalings[artStars.value]?.[artMainStat.value]?.(artLevel.value) ?? 0
 );
 </script>
 
 <style scoped>
 .artifact-selection {
-  width: 100%;
+  width: 500px;
   display: flex;
   justify-content: space-between;
+  border: black solid 1px;
+
   margin-bottom: 0;
   padding-bottom: 0;
 }
 
 .artifact-selection * {
   font-size: xx-large;
-  border: none;
+  /*border: none;*/
   background-color: unset;
   padding: 4px;
   font-family: sans-serif;

@@ -1,4 +1,5 @@
 export enum Stats {
+  NONE,
   CRIT_RATE,
   CRIT_DAMAGE,
   ELEMENTAL_DAMAGE,
@@ -27,6 +28,8 @@ export const isPercentage = (stat: Stats) =>
 
 export function toString(stat: Stats): string {
   switch (stat) {
+    case Stats.NONE:
+      return "";
     case Stats.CRIT_RATE:
       return "Crit Rate";
     case Stats.CRIT_DAMAGE:

@@ -1,5 +1,5 @@
 <template>
-  <ArtifactSelection
+  <ArtifactContainer
     :type="ArtifactType.GOBLET"
     :available-main-stats="mainstats"
     :available-sub-stats="substats"
@@ -8,12 +8,12 @@
 </template>
 
 <script setup lang="ts">
-import ArtifactSelection from "./ArtifactSelection.vue";
 import { ArtifactType } from "../../types/artifactType";
 import { Stats } from "../../types/stats";
 import { ref } from "vue";
 import { useArtifactStore } from "../ArtifactStore";
 import { Artifact } from "../../types/artifact";
+import ArtifactContainer from "./ArtifactContainer.vue";
 
 const artifactStore = useArtifactStore();
 
@@ -33,6 +33,7 @@ const mainstats = ref([
 ]);
 
 const substats = [
+  Stats.NONE,
   Stats.ENERGY_RECHARGE,
   Stats.HP_PERC,
   Stats.HP_FLAT,
