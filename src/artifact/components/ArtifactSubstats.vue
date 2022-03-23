@@ -60,7 +60,7 @@ const availableRolls = computed(
 );
 
 function usedRolls(stat: ArtifactSubStat) {
-  return stat.rolls.reduce(add, 0);
+  return stat.rolls.map(Math.ceil).reduce(add, 0);
 }
 
 const firstSubstat = ref<ArtifactSubStat>({
@@ -119,10 +119,7 @@ const firstAvailableRolls = computed(() =>
       usedRolls(secondSubstat.value) -
       usedRolls(thirdSubstat.value) -
       usedRolls(forthSubstat.value) -
-      firstRequiredRolls.value -
-      secondRequiredRolls.value -
-      thirdRequiredRolls.value -
-      forthRequiredRolls.value,
+      firstRequiredRolls.value,
     0
   )
 );
@@ -132,10 +129,7 @@ const secondAvailableRolls = computed(() =>
       usedRolls(firstSubstat.value) -
       usedRolls(thirdSubstat.value) -
       usedRolls(forthSubstat.value) -
-      firstRequiredRolls.value -
-      secondRequiredRolls.value -
-      thirdRequiredRolls.value -
-      forthRequiredRolls.value,
+      secondRequiredRolls.value,
     0
   )
 );
@@ -145,10 +139,7 @@ const thirdAvailableRolls = computed(() =>
       usedRolls(firstSubstat.value) -
       usedRolls(secondSubstat.value) -
       usedRolls(forthSubstat.value) -
-      firstRequiredRolls.value -
-      secondRequiredRolls.value -
-      thirdRequiredRolls.value -
-      forthRequiredRolls.value,
+      thirdRequiredRolls.value,
     0
   )
 );
@@ -158,9 +149,6 @@ const forthAvailableRolls = computed(() =>
       usedRolls(firstSubstat.value) -
       usedRolls(secondSubstat.value) -
       usedRolls(thirdSubstat.value) -
-      firstRequiredRolls.value -
-      secondRequiredRolls.value -
-      thirdRequiredRolls.value -
       forthRequiredRolls.value,
     0
   )
