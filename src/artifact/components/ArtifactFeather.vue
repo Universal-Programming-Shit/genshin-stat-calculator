@@ -1,15 +1,26 @@
 <template>
-  <ArtifactSelection
-    :type="ArtifactType.FEATHER"
-    :available-main-stats="[Stats.ATTACK_FLAT]"
-    :available-sub-stats="substats"
+  <ArtifactContainer
+      :type="ArtifactType.FEATHER"
+      :available-main-stats="mainstats"
+      :available-sub-stats="substats"
+      @artifact="updateArtifact"
   />
 </template>
 
 <script setup lang="ts">
-import ArtifactSelection from "./ArtifactSelection.vue";
 import { ArtifactType } from "../../types/artifactType";
 import { Stats } from "../../types/stats";
+import { ref } from "vue";
+import {Artifact} from "../../types/artifact";
+import ArtifactContainer from "./ArtifactContainer.vue";
+import {useArtifactStore} from "../ArtifactStore";
+
+const artifactStore = useArtifactStore();
+
+function updateArtifact(artifact: Artifact) {
+  console.log("Art", JSON.stringify(artifact));
+  artifactStore[ArtifactType.FLOWER] = artifact;
+}
 
 const substats = [
   Stats.ENERGY_RECHARGE,
@@ -22,4 +33,6 @@ const substats = [
   Stats.CRIT_DAMAGE,
   Stats.CRIT_RATE,
 ];
+
+const mainstats = [Stats.ATTACK_FLAT]
 </script>

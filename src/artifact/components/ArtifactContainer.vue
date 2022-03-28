@@ -1,6 +1,8 @@
 <template>
+  <div>
+
   <div class="artifact-container">
-    <div class="artifact-selection">
+    <div class="artifact-selection artifact-options">
       <div>{{ type }}</div>
       <select v-model="artifact.stars">
         <option :value="Stars.S5">5 Star</option>
@@ -44,12 +46,14 @@
       </div>
     </div>
     <ArtifactSubstats
+        class="artifact-options"
       :level="artLevel"
       :stars="artStars"
       :available-sub-stats="
         props.availableSubStats.filter((value) => value !== artMainStat)
       "
     />
+  </div>
   </div>
 </template>
 
@@ -83,9 +87,7 @@ const artifact = ref<Artifact>({
   subStats: [],
 });
 
-watch(artifact.value, () => emits("artifact", artifact.value), {
-  flush: "sync",
-});
+watch(artifact.value, () => emits("artifact", artifact.value));
 
 const artLevel = computed(() => artifact.value.level);
 
@@ -120,12 +122,12 @@ const mainStatValue = computed(
 
 <style scoped>
 .artifact-container {
-  width: 500px;
   border: black solid 1px;
+  display: flex;
+  flex-flow: column nowrap;
 }
 
 .artifact-selection {
-  width: 500px;
   display: flex;
   justify-content: space-between;
   margin-bottom: 0;
@@ -140,6 +142,7 @@ const mainStatValue = computed(
   font-family: sans-serif;
 }
 
+
 .artifact-selection *:last-child {
   width: 3.5em;
 }
@@ -148,27 +151,13 @@ const mainStatValue = computed(
   font-size: medium;
 }
 
-table {
-  width: 100%;
-}
-
-tr td,
-tr th {
-  outline: black 1px solid;
-  padding: 10px;
-}
-
-tr td:last-child {
-  width: 3em;
-}
-
 .substat-container * {
   margin: 4px;
 }
 
 .artifact-options {
   margin: 4px;
-  display: flex;
+  display: inline-flex;
   flex-flow: row wrap;
   justify-content: space-between;
 }

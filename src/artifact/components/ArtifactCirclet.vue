@@ -1,16 +1,26 @@
 <template>
-  <ArtifactSelection
-    :type="ArtifactType.CIRCLET"
-    :available-main-stats="mainstats"
-    :available-sub-stats="substats"
+  <ArtifactContainer
+      :type="ArtifactType.CIRCLET"
+      :available-main-stats="mainstats"
+      :available-sub-stats="substats"
+      @artifact="updateArtifact"
   />
 </template>
 
 <script setup lang="ts">
-import ArtifactSelection from "./ArtifactSelection.vue";
 import { ArtifactType } from "../../types/artifactType";
 import { Stats } from "../../types/stats";
 import { ref } from "vue";
+import {Artifact} from "../../types/artifact";
+import ArtifactContainer from "./ArtifactContainer.vue";
+import {useArtifactStore} from "../ArtifactStore";
+
+const artifactStore = useArtifactStore();
+
+function updateArtifact(artifact: Artifact) {
+  console.log("Art", JSON.stringify(artifact));
+  artifactStore[ArtifactType.SANDS] = artifact;
+}
 
 const mainstats = ref([
   Stats.CRIT_DAMAGE,
@@ -19,7 +29,6 @@ const mainstats = ref([
   Stats.HP_PERC,
   Stats.ATTACK_PERC,
   Stats.DEF_PERC,
-  Stats.ENERGY_RECHARGE,
   Stats.ELEMENTAL_MASTERY,
 ]);
 

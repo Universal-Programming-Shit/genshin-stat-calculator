@@ -13,9 +13,8 @@
     </select>
     <select
       :disabled="type === undefined"
-      :value="selectedRolls"
       style="min-width: 0"
-      @update:modelValue="rolls = $event"
+      v-model="rolls"
     >
       <option
         v-for="(roll, i) in availableRollsList"
@@ -42,11 +41,12 @@
 </template>
 
 <script setup lang="ts">
-import { isPercentage, Stats, toString } from "../../types/stats";
-import { computed, defineEmits, defineProps, ref, watchEffect } from "vue";
-import { ArtifactSubStat, subStatScalings } from "../../types/artifact";
+import {isPercentage, Stats, toString} from "../../types/stats";
+import {computed, defineEmits, defineProps, ref, watch} from "vue";
+import {ArtifactSubStat, subStatScalings} from "../../types/artifact";
 import add from "../../util/add";
-import { Stars } from "../../types/stars";
+import {Stars} from "../../types/stars";
+import getElem from "../../util/getElem";
 
 const props = defineProps<{
   modelValue: ArtifactSubStat;
@@ -74,9 +74,7 @@ const selectedRolls = computed<number>(() => {
 });
 
 const availableRollsList = computed<number[][]>(() => {
-  return removeDuplicates(
-    possibleValues(rollAmount.value + props.baseRolls).sort()
-  ).sort((a, b) => a.reduce(add, 0) - b.reduce(add, 0));
+  return getElem(possibleRolls, props.baseRolls + rollAmount.value);
 });
 
 const isPerc = computed(() => (type.value ? isPercentage(type.value) : false));
@@ -114,65 +112,115 @@ const rollsValue = (rolls: number[]) => {
   return rolls.map((n) => n * statScaling).reduce(add, 0);
 };
 
-/**
- * TODO
- * improve performance.
- * only call watcher when necessary
- */
-watchEffect(() => {
+watch(()=>props.baseRolls, () => {
+  if (props.baseRolls){
+    type.value = props.availableSubStats[0];
+  }else{
+    type.value = Stats.NONE;
+  }
+}, {immediate: true});
+
+const possibleRolls = [
+  [[0]],
+  [[0.7], [0.8], [0.9], [1]],
+  [
+    [0.7, 0.7],
+    [0.7, 0.8],
+    [0.7, 0.9],
+    [0.7, 1],
+    [0.8, 1],
+    [0.9, 1],
+    [1, 1],
+  ],
+  [
+    [0.7, 0.7, 0.7],
+    [0.7, 0.7, 0.8],
+    [0.7, 0.7, 0.9],
+    [0.7, 0.7, 1],
+    [0.7, 0.8, 1],
+    [0.7, 0.9, 1],
+    [0.7, 1, 1],
+    [0.8, 1, 1],
+    [0.9, 1, 1],
+    [1, 1, 1],
+  ],
+  [
+    [0.7, 0.7, 0.7, 0.7],
+    [0.7, 0.7, 0.7, 0.8],
+    [0.7, 0.7, 0.7, 0.9],
+    [0.7, 0.7, 0.7, 1],
+    [0.7, 0.7, 0.8, 1],
+    [0.7, 0.7, 0.9, 1],
+    [0.7, 0.7, 1, 1],
+    [0.7, 0.8, 1, 1],
+    [0.7, 0.9, 1, 1],
+    [0.7, 1, 1, 1],
+    [0.8, 1, 1, 1],
+    [0.9, 1, 1, 1],
+    [1, 1, 1, 1],
+  ],
+  [
+    [0.7, 0.7, 0.7, 0.7, 0.7],
+    [0.7, 0.7, 0.7, 0.7, 0.8],
+    [0.7, 0.7, 0.7, 0.7, 0.9],
+    [0.7, 0.7, 0.7, 0.7, 1],
+    [0.7, 0.7, 0.7, 0.8, 1],
+    [0.7, 0.7, 0.7, 0.9, 1],
+    [0.7, 0.7, 0.7, 1, 1],
+    [0.7, 0.7, 0.8, 1, 1],
+    [0.7, 0.7, 0.9, 1, 1],
+    [0.7, 0.7, 1, 1, 1],
+    [0.7, 0.8, 1, 1, 1],
+    [0.7, 0.9, 1, 1, 1],
+    [0.7, 1, 1, 1, 1],
+    [0.8, 1, 1, 1, 1],
+    [0.9, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1],
+  ],
+  [
+    [0.7, 0.7, 0.7, 0.7, 0.7, 0.7],
+    [0.7, 0.7, 0.7, 0.7, 0.7, 0.8],
+    [0.7, 0.7, 0.7, 0.7, 0.7, 0.9],
+    [0.7, 0.7, 0.7, 0.7, 0.7, 1],
+    [0.7, 0.7, 0.7, 0.7, 0.8, 1],
+    [0.7, 0.7, 0.7, 0.7, 0.9, 1],
+    [0.7, 0.7, 0.7, 0.7, 1, 1],
+    [0.7, 0.7, 0.7, 0.8, 1, 1],
+    [0.7, 0.7, 0.7, 0.9, 1, 1],
+    [0.7, 0.7, 0.7, 1, 1, 1],
+    [0.7, 0.7, 0.8, 1, 1, 1],
+    [0.7, 0.7, 0.9, 1, 1, 1],
+    [0.7, 0.7, 1, 1, 1, 1],
+    [0.7, 0.8, 1, 1, 1, 1],
+    [0.7, 0.9, 1, 1, 1, 1],
+    [0.7, 1, 1, 1, 1, 1],
+    [0.8, 1, 1, 1, 1, 1],
+    [0.9, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1],
+  ],
+];
+
+
+watch(type, () => {
   type.value = substats.value.includes(type.value)
     ? type.value
     : substats.value[0];
-  emits("update:modelValue", {
-    type: type.value,
-    rolls: availableRollsList.value[selectedRolls.value],
-  });
 });
+
+watch(()=>props.availableSubStats, ()=>{
+  if (!props.availableSubStats.includes(type.value)){
+    type.value = props.availableSubStats[0];
+  }
+});
+
+
+watch([type, selectedRolls], ()=> emits("update:modelValue", {type: type.value, rolls: availableRollsList.value[selectedRolls.value]}))
 </script>
 
 <style scoped>
-.artifact-selection * {
-  font-size: xx-large;
-  border: none;
-  background-color: unset;
-  padding: 4px;
-  font-family: sans-serif;
-}
-
-.artifact-selection *:last-child {
-  width: 3.5em;
-}
-
-.artifact-selection > select > option {
-  font-size: medium;
-}
-
-table {
-  width: 100%;
-}
-
-tr td,
-tr th {
-  outline: black 1px solid;
-  padding: 10px;
-}
-
-tr td:last-child {
-  width: 3em;
-}
-
-.select {
-  text-overflow: ellipsis;
-  flex-shrink: 1;
-  flex-grow: 1;
-  max-width: 100%;
-  min-width: 0;
-}
-
 .row {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
-  grid-row: auto;
   flex-grow: 1;
   background-color: darkorange;
 }

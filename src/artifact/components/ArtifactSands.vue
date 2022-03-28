@@ -1,16 +1,26 @@
 <template>
-  <ArtifactSelection
-    :type="ArtifactType.SANDS"
-    :available-main-stats="mainstats"
-    :available-sub-stats="substats"
+  <ArtifactContainer
+      :type="ArtifactType.SANDS"
+      :available-main-stats="mainstats"
+      :available-sub-stats="substats"
+      @artifact="updateArtifact"
   />
 </template>
 
 <script setup lang="ts">
-import ArtifactSelection from "./ArtifactSelection.vue";
 import { ArtifactType } from "../../types/artifactType";
 import { Stats } from "../../types/stats";
 import { ref } from "vue";
+import {Artifact} from "../../types/artifact";
+import ArtifactContainer from "./ArtifactContainer.vue";
+import {useArtifactStore} from "../ArtifactStore";
+
+const artifactStore = useArtifactStore();
+
+function updateArtifact(artifact: Artifact) {
+  console.log("Art", JSON.stringify(artifact));
+  artifactStore[ArtifactType.SANDS] = artifact;
+}
 
 const mainstats = ref([
   Stats.HP_PERC,
