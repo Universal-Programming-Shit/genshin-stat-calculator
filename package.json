@@ -5,24 +5,30 @@
     "build": "vue-tsc --noEmit && vite build",
     "serve remote": "vite serve --host",
     "serve": "vite serve",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
     "lint": "eslint --ext .js,.ts,.vue src && prettier -c .",
     "lint:fix": "eslint --ext .js,.ts,.vue --fix src && prettier --write ."
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.15.0",
-    "@typescript-eslint/parser": "^5.15.0",
+    "@pinia/testing": "^0.0.10",
+    "@typescript-eslint/eslint-plugin": "^5.17.0",
+    "@typescript-eslint/parser": "^5.17.0",
     "@vitejs/plugin-vue": "^2.2.4",
-    "eslint": "^8.11.0",
+    "@vue/test-utils": "^2.0.0-rc.17",
+    "eslint": "^8.12.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-vue": "^8.5.0",
-    "prettier": "^2.6.0",
-    "typescript": "^4.6.2",
+    "jsdom": "^19.0.0",
+    "prettier": "^2.6.1",
+    "typescript": "^4.6.3",
     "vite": "^2.8.6",
+    "vitest": "^0.8.0",
     "vue-eslint-parser": "^8.3.0",
-    "vue-tsc": "^0.33.2-patch.1"
+    "vue-tsc": "^0.33.9"
   },
   "dependencies": {
-    "@vueuse/core": "^7.7.1",
+    "@vueuse/core": "^8.2.0",
     "pinia": "^2.0.12",
     "reset-css": "^5.0.1",
     "vue": "^3.2.31"
