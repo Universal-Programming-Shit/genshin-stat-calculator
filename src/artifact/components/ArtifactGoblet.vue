@@ -1,22 +1,30 @@
 <template>
-  <ArtifactSelection
+  <ArtifactContainer
     :type="ArtifactType.GOBLET"
     :available-main-stats="mainstats"
     :available-sub-stats="substats"
+    @artifact="updateArtifact"
   />
 </template>
 
 <script setup lang="ts">
-import ArtifactSelection from "./ArtifactSelection.vue";
 import { ArtifactType } from "../../types/artifactType";
 import { Stats } from "../../types/stats";
 import { ref } from "vue";
+import { useArtifactStore } from "../ArtifactStore";
+import { Artifact } from "../../types/artifact";
+import ArtifactContainer from "./ArtifactContainer.vue";
+
+const artifactStore = useArtifactStore();
+
+function updateArtifact(artifact: Artifact) {
+  artifactStore[ArtifactType.GOBLET] = artifact;
+}
 
 const mainstats = ref([
   Stats.HP_PERC,
   Stats.ATTACK_PERC,
   Stats.DEF_PERC,
-  Stats.ENERGY_RECHARGE,
   Stats.ELEMENTAL_MASTERY,
   Stats.PHYSICAL_DAMAGE,
   Stats.ELEMENTAL_DAMAGE,

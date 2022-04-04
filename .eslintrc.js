@@ -11,7 +11,7 @@ module.exports = {
   },
   extends: [
     "plugin:@typescript-eslint/recommended",
-    "eslint:recommended",
+    // "eslint:recommended",
     "plugin:vue/vue3-recommended",
     "prettier",
   ],

@@ -1,17 +1,18 @@
 export enum Stats {
-  CRIT_RATE,
-  CRIT_DAMAGE,
-  ELEMENTAL_DAMAGE,
-  HEALING_BONUS,
-  ATTACK_FLAT,
-  ATTACK_PERC,
-  HP_FLAT,
-  HP_PERC,
-  DEF_FLAT,
-  DEF_PERC,
-  ENERGY_RECHARGE,
-  ELEMENTAL_MASTERY,
-  PHYSICAL_DAMAGE,
+  NONE = "NONE",
+  CRIT_RATE = "CRIT_RATE",
+  CRIT_DAMAGE = "CRIT_DAMAGE",
+  ELEMENTAL_DAMAGE = "ELEMENTAL_DAMAGE",
+  HEALING_BONUS = "HEALING_BONUS",
+  ATTACK_FLAT = "ATTACK_FLAT",
+  ATTACK_PERC = "ATTACK_PERC",
+  HP_FLAT = "HP_FLAT",
+  HP_PERC = "HP_PERC",
+  DEF_FLAT = "DEF_FLAT",
+  DEF_PERC = "DEF_PERC",
+  ENERGY_RECHARGE = "ENERGY_RECHARGE",
+  ELEMENTAL_MASTERY = "ELEMENTAL_MASTERY",
+  PHYSICAL_DAMAGE = "PHYSICAL_DAMAGE",
 }
 
 export const isPercentage = (stat: Stats) =>
@@ -27,6 +28,8 @@ export const isPercentage = (stat: Stats) =>
 
 export function toString(stat: Stats): string {
   switch (stat) {
+    case Stats.NONE:
+      return "";
     case Stats.CRIT_RATE:
       return "Crit Rate";
     case Stats.CRIT_DAMAGE:

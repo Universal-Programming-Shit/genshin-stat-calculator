@@ -1,174 +1,72 @@
 <template>
   <div class="row">
-    <select
-      v-model="useArtifactStore()[type].subStats[index].type"
-      class="select"
-      @input="resetSelectedRoll"
-    >
-      <option
-        v-for="availableStat in availableSubStats"
-        :key="availableStat"
-        :value="availableStat"
-        :selected="
-          useArtifactStore()[type].subStats[index].type === availableStat
-        "
-        :hidden="
-          usedSubStats.includes(availableStat) &&
-          !(artifactStore[type].subStats[index].type === availableStat)
-        "
-      >
-        {{ toString(availableStat) }}
-      </option>
-    </select>
-
-    <select
-      v-model="artifactStore[type].subStats[index].rolls"
-      style="min-width: 0"
-      :disabled="useArtifactStore()[type].subStats[index].type === undefined"
-    >
-      <option
-        v-for="roll in availableRolls"
-        :key="JSON.stringify(roll)"
-        :value="roll"
-      >
-        {{
-          isPerc
-            ? (rollsValue(roll) * 100).toFixed(2)
-            : rollsValue(roll).toFixed(0)
-        }}{{ isPerc ? "%" : "" }}
-      </option>
-    </select>
-    <input
+    <SubStatTypeSelection v-model="type" :substats="substats" />
+    <SubStatRollsSlider
+      v-model="rollAmount"
+      :max-rolls="baseRolls ? availableRolls : 0"
+    />
+    <SubStatValueSelection
       v-model="rolls"
-      type="range"
-      min="1"
-      max="6"
-      :disabled="useArtifactStore()[type].subStats[index].type === undefined"
-      @input="resetSelectedRoll"
+      :is-percentage="isPercentage(type)"
+      :roll-amount="baseRolls ? rollAmount + 1 : 0"
+      :roll-value="rollValue"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { isPercentage, Stats, toString } from "../../types/stats";
-import { useArtifactStore } from "../ArtifactStore";
-import { computed, ref } from "vue";
-import { Artifact, subStatScalings } from "../../types/artifact";
-import { ArtifactType } from "../../types/artifactType";
-import add from "../../util/add";
-import { defineProps } from "vue";
+import { isPercentage, Stats } from "../../types/stats";
+import { computed, defineEmits, defineProps, ref, watch } from "vue";
+import { ArtifactSubStat, subStatScalings } from "../../types/artifact";
+import { Stars } from "../../types/stars";
+import SubStatTypeSelection from "./SubStatTypeSelection.vue";
+import SubStatRollsSlider from "./SubStatRollsSlider.vue";
+import SubStatValueSelection from "./SubStatValueSelection.vue";
 
 const props = defineProps<{
-  type: ArtifactType;
+  modelValue: ArtifactSubStat;
+  stars: Stars;
   availableSubStats: Stats[];
-  index: number;
+  availableRolls: number;
+  baseRolls: boolean;
 }>();
 
-const artifactStore = useArtifactStore();
+const emits = defineEmits<{
+  (e: "update:modelValue", subStat: ArtifactSubStat): void;
+}>();
 
-const usedSubStats = computed(() => {
-  const artifact: Artifact = useArtifactStore()[props.type];
-  return [artifact.mainStat, ...artifact.subStats.map((s) => s.type)];
-});
+const substats = computed<Stats[]>(() => [
+  ...(props.baseRolls ? props.availableSubStats : [Stats.NONE]),
+]);
 
-const rolls = ref(
-  artifactStore[props.type].subStats[props.index].rolls?.length ?? 1
+const type = ref<Stats>(props.modelValue.type);
+const rollAmount = ref<number>(props.modelValue.rolls?.length ?? 0);
+const rolls = ref<number[]>([0]);
+
+const rollValue = computed<number>(
+  () => subStatScalings[props.stars]?.[type.value] ?? 0
 );
 
-const availableRolls = computed(() => {
-  return removeDuplicates(possibleValues(rolls.value).sort()).sort(
-    (a, b) => a.reduce(add, 0) - b.reduce(add, 0)
-  );
-});
-
-const isPerc = computed(() =>
-  isPercentage(useArtifactStore()[props.type].subStats[props.index].type)
-);
-
-const substatRolls = [0.7, 0.8, 0.9, 1.0];
-
-function removeDuplicates(arr: number[][]) {
-  return arr.filter((value: number[], index) => {
-    return (
-      index ===
-      arr.findIndex((obj: number[]) => {
-        return (
-          Math.fround(obj.reduce(add, 0)) === Math.fround(value.reduce(add, 0))
-        );
-      })
-    );
-  });
-}
-
-function possibleValues(n: number): number[][] {
-  if (n <= 0) {
-    return [[0]];
-  } else if (n === 1) {
-    return substatRolls.map((value) => [value]);
-  } else {
-    const values = possibleValues(n - 1);
-    return substatRolls.flatMap((value) =>
-      values.map((value1) => [value, ...value1])
-    );
+watch([type, rolls, rollAmount], () => {
+  if (!props.baseRolls) {
+    emits("update:modelValue", { type: Stats.NONE, rolls: [] });
+    return;
   }
-}
 
-const rollsValue = (rolls: number[]) => {
-  const statScaling =
-    subStatScalings[artifactStore[props.type].stars]?.[
-      artifactStore[props.type].subStats[props.index].type
-    ] ?? 0;
-  return rolls.map((n) => n * statScaling).reduce(add, 0);
-};
-
-function resetSelectedRoll() {
-  artifactStore[props.type].subStats[props.index].rolls =
-    availableRolls.value[0];
-}
+  emits("update:modelValue", { type: type.value, rolls: rolls.value });
+});
 </script>
 
 <style scoped>
-.artifact-selection * {
-  font-size: xx-large;
-  border: none;
-  background-color: unset;
-  padding: 4px;
-  font-family: sans-serif;
-}
-
-.artifact-selection *:last-child {
-  width: 3.5em;
-}
-
-.artifact-selection > select > option {
-  font-size: medium;
-}
-
-table {
-  width: 100%;
-}
-
-tr td,
-tr th {
-  outline: black 1px solid;
-  padding: 10px;
-}
-
-tr td:last-child {
-  width: 3em;
-}
-
-.select {
-  text-overflow: ellipsis;
-  flex-shrink: 1;
+.row {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
-  max-width: 100%;
+  background-color: darkorange;
   min-width: 0;
 }
-.row {
-  display: inline-flex;
-  flex-direction: column;
-  grid-row: auto;
-  flex-grow: 1;
+
+.row * {
+  background-color: transparent;
 }
 </style>

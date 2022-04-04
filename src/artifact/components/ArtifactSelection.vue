@@ -1,75 +1,68 @@
 <template>
   <div class="artifact-selection">
     <div>{{ type }}</div>
-    <select v-model="artifactStore[type].stars">
+    <select v-model="artifact.stars">
       <option :value="Stars.S5">5 Star</option>
       <option :value="Stars.S4">4 Star</option>
       <option :value="Stars.S3">3 Star</option>
+      <option :value="Stars.S2">2 Star</option>
+      <option :value="Stars.S1">1 Star</option>
     </select>
   </div>
-  <table>
-    <thead>
-      <tr>
-        <th>Level: {{ artLevel }}</th>
-        <th>
-          <input
-            v-model="artifactStore[type].level"
-            type="range"
-            min="1"
-            :max="maxLevel"
-          />
-        </th>
-      </tr>
-    </thead>
-
-    <thead>
-      <tr>
-        <th>
-          <select
-            v-model="artifactStore[type].mainStat"
-            :disabled="availableMainStats.length <= 1"
-          >
-            <option
-              v-for="stat in availableMainStats"
-              :key="stat"
-              :value="stat"
-              :selected="artMainStat === stat"
-            >
-              {{ toString(stat) }}
-            </option>
-          </select>
-        </th>
-        <th v-if="mainStatValue">
-          {{
-            isPerc
-              ? (mainStatValue * 100).toFixed(2)
-              : mainStatValue.toFixed(0)
-          }}{{ isPerc ? "%" : "" }}
-        </th>
-      </tr>
-    </thead>
-  </table>
+  <div class="artifact-options">
+    <div>Level: {{ artLevel }}</div>
+    <div>
+      <input v-model="artifact.level" type="range" min="1" :max="maxLevel" />
+    </div>
+    <div>
+      <select
+        v-model="artifact.mainStat"
+        :disabled="props.availableMainStats.length <= 1"
+      >
+        <option
+          v-for="stat in props.availableMainStats"
+          :key="stat"
+          :value="stat"
+          :selected="artMainStat === stat"
+        >
+          {{ toString(stat) }}
+        </option>
+      </select>
+    </div>
+    <div>
+      {{ isPerc ? (mainStatValue * 100).toFixed(2) : mainStatValue.toFixed(0)
+      }}{{ isPerc ? "%" : "" }}
+    </div>
+  </div>
 
   <div class="substat-container">
     <SubStatRow
-      :type="type"
-      :index="0"
-      :available-sub-stats="availableSubStats"
+      v-model="firstSubstat"
+      :stars="artStars"
+      :base-rolls="artStars >= 3 || (artStars === 2 && moreRolls)"
+      :available-rolls="availableRolls"
+      :available-sub-stats="props.availableSubStats"
     />
     <SubStatRow
-      :type="type"
-      :index="1"
-      :available-sub-stats="availableSubStats"
+      v-model="secondSubstat"
+      :stars="artStars"
+      :base-rolls="artStars >= 4 || (artStars === 3 && moreRolls)"
+      :available-rolls="availableRolls"
+      :available-sub-stats="props.availableSubStats"
     />
     <SubStatRow
-      :type="type"
-      :index="2"
-      :available-sub-stats="availableSubStats"
+      v-model="thirdSubstat"
+      :stars="artStars"
+      :base-rolls="artStars === 5 || (artStars === 4 && moreRolls)"
+      :available-rolls="availableRolls"
+      :available-sub-stats="props.availableSubStats"
     />
     <SubStatRow
-      :type="type"
-      :index="3"
-      :available-sub-stats="availableSubStats"
+      v-model="forthSubstat"
+      :stars="artStars"
+      :base-rolls="artStars === 5 && moreRolls"
+      :available-rolls="availableRolls"
+      :available-sub-stats="props.availableSubStats"
     />
   </div>
 </template>
@@ -77,12 +70,14 @@
 <script setup lang="ts">
 import { ArtifactType } from "../../types/artifactType";
 import { isPercentage, Stats, toString } from "../../types/stats";
-import { computed, defineEmits } from "vue";
-import { Artifact, mainStatScalings } from "../../types/artifact";
+import { computed, defineEmits, defineProps, ref, watch } from "vue";
+import {
+  Artifact,
+  ArtifactSubStat,
+  mainStatScalings,
+} from "../../types/artifact";
 import { Stars } from "../../types/stars";
 import SubStatRow from "./SubStatRow.vue";
-import { useArtifactStore } from "../ArtifactStore";
-import { defineProps } from "vue";
 
 const props = defineProps<{
   type: ArtifactType;
@@ -90,15 +85,49 @@ const props = defineProps<{
   availableSubStats: Stats[];
 }>();
 
-defineEmits<{ artifact: Artifact }>();
+const emits = defineEmits<{ (e: "artifact", artifact: Artifact): void }>();
 
-const artifactStore = useArtifactStore();
+const moreRolls = ref(false);
 
-const artLevel = computed(() => useArtifactStore()[props.type].level);
+const artifact = ref<Artifact>({
+  type: props.type,
+  level: 1,
+  stars: Stars.S1,
+  mainStat: props.availableMainStats[0],
+  subStats: [],
+});
 
-const artStars = computed(() => useArtifactStore()[props.type].stars);
+const firstSubstat = ref<ArtifactSubStat>({
+  type: undefined as unknown as Stats,
+  rolls: [],
+});
 
-const artMainStat = computed(() => useArtifactStore()[props.type].mainStat);
+const secondSubstat = ref<ArtifactSubStat>({
+  type: undefined as unknown as Stats,
+  rolls: [],
+});
+
+const thirdSubstat = ref<ArtifactSubStat>({
+  type: undefined as unknown as Stats,
+  rolls: [],
+});
+
+const forthSubstat = ref<ArtifactSubStat>({
+  type: undefined as unknown as Stats,
+  rolls: [],
+});
+
+const availableRolls = ref(4);
+
+watch(artifact.value, () => emits("artifact", artifact.value), {
+  flush: "sync",
+});
+
+const artLevel = computed(() => artifact.value.level);
+
+const artStars = computed<Stars>(() => artifact.value.stars);
+
+const artMainStat = computed(() => artifact.value.mainStat);
 
 const maxLevel = computed(() => {
   switch (artStars.value) {
@@ -119,23 +148,26 @@ const maxLevel = computed(() => {
 
 const isPerc = computed(() => isPercentage(artMainStat.value));
 
-const mainStatValue = computed(() =>
-  mainStatScalings[artStars.value]?.[artMainStat.value]?.(artLevel.value)
+const mainStatValue = computed(
+  () =>
+    mainStatScalings[artStars.value]?.[artMainStat.value]?.(artLevel.value) ?? 0
 );
 </script>
 
 <style scoped>
 .artifact-selection {
-  width: 100%;
+  width: 500px;
   display: flex;
   justify-content: space-between;
+  border: black solid 1px;
+
   margin-bottom: 0;
   padding-bottom: 0;
 }
 
 .artifact-selection * {
   font-size: xx-large;
-  border: none;
+  /*border: none;*/
   background-color: unset;
   padding: 4px;
   font-family: sans-serif;
@@ -171,5 +203,12 @@ tr td:last-child {
 
 .substat-container * {
   margin: 4px;
+}
+
+.artifact-options {
+  margin: 4px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
 }
 </style>
