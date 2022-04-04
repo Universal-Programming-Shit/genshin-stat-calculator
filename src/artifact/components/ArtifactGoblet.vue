@@ -18,7 +18,6 @@ import ArtifactContainer from "./ArtifactContainer.vue";
 const artifactStore = useArtifactStore();
 
 function updateArtifact(artifact: Artifact) {
-  console.log("Art", JSON.stringify(artifact));
   artifactStore[ArtifactType.GOBLET] = artifact;
 }
 

@@ -18,7 +18,6 @@ import {useArtifactStore} from "../ArtifactStore";
 const artifactStore = useArtifactStore();
 
 function updateArtifact(artifact: Artifact) {
-  console.log("Art", JSON.stringify(artifact));
   artifactStore[ArtifactType.SANDS] = artifact;
 }
 

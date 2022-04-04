@@ -126,7 +126,7 @@ watch(props, ()=>{
   if (props.modelValue === undefined){
     selectedIndex.value = 0;
     changeRolls(availableRollsList.value[0]);
-  } else if (props.rollAmount !== props.modelValue.length){
+  } else if (props.rollAmount !== props.modelValue.length || props.rollAmount !== props.modelValue.filter(value => value).length){
     const previousRolls = getElem(possibleRolls, props.modelValue.length);
     const previousPosition =  selectedIndex.value / (previousRolls.length-1);
     const newRolls = getElem(possibleRolls, props.rollAmount);

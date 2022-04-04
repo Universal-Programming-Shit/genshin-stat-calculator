@@ -1,7 +1,7 @@
 <template>
   <select :value="modelValue" class="select" @change="changeType($event.target.value)">
     <option
-        v-for="availableStat in substats"
+        v-for="availableStat of substats"
         :key="availableStat"
         :value="availableStat"
         :selected="modelValue === availableStat"

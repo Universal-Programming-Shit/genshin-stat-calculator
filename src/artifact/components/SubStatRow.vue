@@ -2,7 +2,7 @@
   <div class="row">
     <SubStatTypeSelection v-model="type" :substats="substats"/>
     <SubStatRollsSlider v-model="rollAmount" :max-rolls="baseRolls ? availableRolls : 0"/>
-    <SubStatValueSelection v-model="rolls" :is-percentage="isPercentage(type)" :roll-amount="rollAmount" :roll-value="rollValue"/>
+    <SubStatValueSelection v-model="rolls" :is-percentage="isPercentage(type)" :roll-amount="baseRolls ? rollAmount + 1 : 0" :roll-value="rollValue"/>
   </div>
 </template>
 
@@ -21,13 +21,13 @@ const props = defineProps<{
   stars: Stars;
   availableSubStats: Stats[];
   availableRolls: number;
-  baseRolls: number;
+  baseRolls: boolean;
 }>();
 
 const emits = defineEmits<{ (e: "update:modelValue", subStat: ArtifactSubStat): void }>();
 
 const substats = computed<Stats[]>(() => [
-  ...(props.baseRolls === 0 ? [Stats.NONE] : props.availableSubStats),
+  ...(props.baseRolls ? props.availableSubStats : [Stats.NONE]),
 ]);
 
 const type = ref<Stats>(props.modelValue.type);
@@ -36,7 +36,14 @@ const rolls = ref<number[]>([0]);
 
 const rollValue = computed<number>(() => subStatScalings[props.stars]?.[type.value] ?? 0);
 
-watch([type, rolls], ()=> emits("update:modelValue", {type: type.value, rolls: rolls.value}))
+watch([type, rolls, rollAmount], ()=> {
+  if (!props.baseRolls){
+    emits("update:modelValue", {type: Stats.NONE, rolls: []});
+    return;
+  }
+
+  emits("update:modelValue", {type: type.value, rolls: rolls.value});
+})
 </script>
 
 <style scoped>
@@ -45,6 +52,7 @@ watch([type, rolls], ()=> emits("update:modelValue", {type: type.value, rolls: r
   flex-direction: column;
   flex-grow: 1;
   background-color: darkorange;
+  min-width: 0;
 }
 
 .row * {

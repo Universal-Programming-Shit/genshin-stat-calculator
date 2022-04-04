@@ -39,28 +39,28 @@
     <SubStatRow
       v-model="firstSubstat"
       :stars="artStars"
-      :base-rolls="artStars >= 3 || (artStars === 2 && moreRolls) ? 1 : 0"
+      :base-rolls="artStars >= 3 || (artStars === 2 && moreRolls)"
       :available-rolls="availableRolls"
       :available-sub-stats="props.availableSubStats"
     />
     <SubStatRow
       v-model="secondSubstat"
       :stars="artStars"
-      :base-rolls="artStars >= 4 || (artStars === 3 && moreRolls) ? 1 : 0"
+      :base-rolls="artStars >= 4 || (artStars === 3 && moreRolls)"
       :available-rolls="availableRolls"
       :available-sub-stats="props.availableSubStats"
     />
     <SubStatRow
       v-model="thirdSubstat"
       :stars="artStars"
-      :base-rolls="artStars === 5 || (artStars === 4 && moreRolls) ? 1 : 0"
+      :base-rolls="artStars === 5 || (artStars === 4 && moreRolls)"
       :available-rolls="availableRolls"
       :available-sub-stats="props.availableSubStats"
     />
     <SubStatRow
       v-model="forthSubstat"
       :stars="artStars"
-      :base-rolls="artStars === 5 && moreRolls ? 1 : 0"
+      :base-rolls="artStars === 5 && moreRolls"
       :available-rolls="availableRolls"
       :available-sub-stats="props.availableSubStats"
     />
