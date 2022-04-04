@@ -1,9 +1,9 @@
 <template>
   <ArtifactContainer
-      :type="ArtifactType.CIRCLET"
-      :available-main-stats="mainstats"
-      :available-sub-stats="substats"
-      @artifact="updateArtifact"
+    :type="ArtifactType.CIRCLET"
+    :available-main-stats="mainstats"
+    :available-sub-stats="substats"
+    @artifact="updateArtifact"
   />
 </template>
 
@@ -11,9 +11,9 @@
 import { ArtifactType } from "../../types/artifactType";
 import { Stats } from "../../types/stats";
 import { ref } from "vue";
-import {Artifact} from "../../types/artifact";
+import { Artifact } from "../../types/artifact";
 import ArtifactContainer from "./ArtifactContainer.vue";
-import {useArtifactStore} from "../ArtifactStore";
+import { useArtifactStore } from "../ArtifactStore";
 
 const artifactStore = useArtifactStore();
 

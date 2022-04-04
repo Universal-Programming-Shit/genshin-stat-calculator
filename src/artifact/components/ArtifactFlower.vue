@@ -1,18 +1,18 @@
 <template>
   <ArtifactContainer
-      :type="ArtifactType.FLOWER"
-      :available-main-stats="mainstats"
-      :available-sub-stats="substats"
-      @artifact="updateArtifact"
+    :type="ArtifactType.FLOWER"
+    :available-main-stats="mainstats"
+    :available-sub-stats="substats"
+    @artifact="updateArtifact"
   />
 </template>
 
 <script setup lang="ts">
 import { ArtifactType } from "../../types/artifactType";
 import { Stats } from "../../types/stats";
-import {Artifact} from "../../types/artifact";
+import { Artifact } from "../../types/artifact";
 import ArtifactContainer from "./ArtifactContainer.vue";
-import {useArtifactStore} from "../ArtifactStore";
+import { useArtifactStore } from "../ArtifactStore";
 
 const artifactStore = useArtifactStore();
 
@@ -32,5 +32,5 @@ const substats = [
   Stats.CRIT_RATE,
 ];
 
-const mainstats = [Stats.HP_FLAT]
+const mainstats = [Stats.HP_FLAT];
 </script>
