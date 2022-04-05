@@ -15,27 +15,27 @@ export default createRouter({
     {
       name: "flower",
       path: "/artifact/flower",
-      component: () => import("./artifact/components/ArtifactFlower.vue"),
+      component: () => import("./artifact/ArtifactFlower.vue"),
     },
     {
       name: "feather",
       path: "/artifact/feather",
-      component: () => import("./artifact/components/ArtifactFeather.vue"),
+      component: () => import("./artifact/ArtifactFeather.vue"),
     },
     {
       name: "sands",
       path: "/artifact/sands",
-      component: () => import("./artifact/components/ArtifactSands.vue"),
+      component: () => import("./artifact/ArtifactSands.vue"),
     },
     {
       name: "goblet",
       path: "/artifact/goblet",
-      component: () => import("./artifact/components/ArtifactGoblet.vue"),
+      component: () => import("./artifact/ArtifactGoblet.vue"),
     },
     {
       name: "circlet",
       path: "/artifact/circlet",
-      component: () => import("./artifact/components/ArtifactCirclet.vue"),
+      component: () => import("./artifact/ArtifactCirclet.vue"),
     },
   ],
   history: createWebHistory("/genshin-stat-calculator"),

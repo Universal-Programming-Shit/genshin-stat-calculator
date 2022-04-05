@@ -49,26 +49,21 @@ const statStore = useStatStore();
 
 <style scoped>
 .container {
-  box-shadow: #00000050 4px 4px;
-  border: black 1px solid;
   background-color: mintcream;
-  width: 100%;
-}
-
-.container * {
-  box-shadow: inset 2px 2px rgba(0, 0, 5, 0.25);
-  width: 100%;
 }
 
 .container div {
   font-size: xx-large;
   border: none;
   background-color: unset;
-  padding: 4px;
+  margin: 0.25em;
   font-family: sans-serif;
 }
+table {
+  width: 100%;
+}
 tr td {
-  outline: black 1px solid;
-  padding: 10px;
+  padding: 0.5em;
+  border: black 1px solid;
 }
 </style>

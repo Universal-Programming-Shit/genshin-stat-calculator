@@ -1,6 +1,6 @@
 <template>
   <ArtifactContainer
-    :type="ArtifactType.CIRCLET"
+    :type="ArtifactType.GOBLET"
     :available-main-stats="mainstats"
     :available-sub-stats="substats"
     @artifact="updateArtifact"
@@ -8,27 +8,26 @@
 </template>
 
 <script setup lang="ts">
-import { ArtifactType } from "../../types/artifactType";
-import { Stats } from "../../types/stats";
+import { ArtifactType } from "../types/artifactType";
+import { Stats } from "../types/stats";
 import { ref } from "vue";
-import { Artifact } from "../../types/artifact";
-import ArtifactContainer from "./ArtifactContainer.vue";
-import { useArtifactStore } from "../ArtifactStore";
+import { useArtifactStore } from "./ArtifactStore";
+import { Artifact } from "../types/artifact";
+import ArtifactContainer from "./components/ArtifactContainer.vue";
 
 const artifactStore = useArtifactStore();
 
 function updateArtifact(artifact: Artifact) {
-  artifactStore[ArtifactType.SANDS] = artifact;
+  artifactStore[ArtifactType.GOBLET] = artifact;
 }
 
 const mainstats = ref([
-  Stats.CRIT_DAMAGE,
-  Stats.CRIT_RATE,
-  Stats.HEALING_BONUS,
   Stats.HP_PERC,
   Stats.ATTACK_PERC,
   Stats.DEF_PERC,
   Stats.ELEMENTAL_MASTERY,
+  Stats.PHYSICAL_DAMAGE,
+  Stats.ELEMENTAL_DAMAGE,
 ]);
 
 const substats = [

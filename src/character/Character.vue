@@ -18,12 +18,10 @@ const color = computed(() => getColor(element.value));
 
 <style scoped>
 .character-container {
-  box-shadow: #00000050 4px 4px;
-  border: black 1px solid;
+  padding: 0.25em;
 }
 
 .character-container * {
-  box-shadow: inset 2px 2px rgba(0, 0, 5, 0.25);
   width: 100%;
 }
 </style>

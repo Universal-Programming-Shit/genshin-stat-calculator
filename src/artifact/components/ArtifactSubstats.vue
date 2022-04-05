@@ -216,39 +216,13 @@ const forthAvailableSubstats = computed(() => {
 </script>
 
 <style scoped>
-.artifact-selection * {
-  font-size: xx-large;
-  border: none;
-  background-color: unset;
-  padding: 4px;
-  font-family: sans-serif;
-}
-
-.artifact-selection *:last-child {
-  width: 3.5em;
-}
-
-.artifact-selection > select > option {
-  font-size: medium;
-}
-
-tr td,
-tr th {
-  outline: black 1px solid;
-  padding: 10px;
-}
-
-tr td:last-child {
-  width: 3em;
-}
-
 .substat-container {
   display: inline-flex;
   flex-wrap: wrap;
-  margin: 4px;
+  gap: 0.25em;
 }
 
 .substat-container * {
-  margin: 4px;
+  padding: 0.25em;
 }
 </style>

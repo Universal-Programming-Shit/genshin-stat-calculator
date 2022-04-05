@@ -8,11 +8,11 @@
 </template>
 
 <script setup lang="ts">
-import { ArtifactType } from "../../types/artifactType";
-import { Stats } from "../../types/stats";
-import { Artifact } from "../../types/artifact";
-import ArtifactContainer from "./ArtifactContainer.vue";
-import { useArtifactStore } from "../ArtifactStore";
+import { ArtifactType } from "../types/artifactType";
+import { Stats } from "../types/stats";
+import { Artifact } from "../types/artifact";
+import ArtifactContainer from "./components/ArtifactContainer.vue";
+import { useArtifactStore } from "./ArtifactStore";
 
 const artifactStore = useArtifactStore();
 

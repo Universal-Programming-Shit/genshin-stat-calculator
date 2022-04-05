@@ -1,55 +1,40 @@
 <template>
-  <div>
-    <div class="artifact-container">
-      <div class="artifact-selection artifact-options">
-        <div>{{ type }}</div>
-        <select v-model="artifact.stars">
-          <option :value="Stars.S5">5 Star</option>
-          <option :value="Stars.S4">4 Star</option>
-          <option :value="Stars.S3">3 Star</option>
-          <option :value="Stars.S2">2 Star</option>
-          <option :value="Stars.S1">1 Star</option>
-        </select>
-      </div>
-      <div class="artifact-options">
-        <div>Level: {{ artLevel }}</div>
-        <div>
-          <input
-            v-model="levelModel"
-            type="range"
-            min="1"
-            :max="maxLevel"
-            @input="setLevel"
-          />
-        </div>
-      </div>
-      <div class="artifact-options">
-        <div>
-          <select
-            v-model="artifact.mainStat"
-            :disabled="props.availableMainStats.length <= 1"
-          >
-            <option
-              v-for="stat in props.availableMainStats"
-              :key="stat"
-              :value="stat"
-              :selected="artMainStat === stat"
-            >
-              {{ toString(stat) }}
-            </option>
-          </select>
-        </div>
-        <div>
-          {{
-            isPerc
-              ? (mainStatValue * 100).toFixed(2)
-              : mainStatValue.toFixed(0)
-          }}{{ isPerc ? "%" : "" }}
-        </div>
-      </div>
+  <div class="artifact-container">
+    <div class="artifact-selection artifact-options">
+      <div>{{ type }}</div>
+      <star-selection v-model="artifact.stars" />
+    </div>
+    <div class="artifact-options">
+      <div class="inset">Level: {{ artLevel }}</div>
+      <input
+        v-model="levelModel"
+        type="range"
+        min="1"
+        :max="maxLevel"
+        @input="setLevel"
+      />
+    </div>
+    <div class="artifact-options">
+      <select
+        v-model="artifact.mainStat"
+        class="inset"
+        :disabled="props.availableMainStats.length <= 1"
+      >
+        <option
+          v-for="stat in props.availableMainStats"
+          :key="stat"
+          :value="stat"
+          :selected="artMainStat === stat"
+        >
+          {{ toString(stat) }}
+        </option>
+      </select>
+      <stat-value v-model="mainStatValue" :is-perc="isPerc" />
+    </div>
+    <div class="artifact-options">
       <ArtifactSubstats
         v-model="artifact.subStats"
-        class="artifact-options"
+        class="inset"
         :level="artLevel"
         :stars="artStars"
         :available-sub-stats="
@@ -67,6 +52,8 @@ import { computed, ref, watch } from "vue";
 import { Artifact, mainStatScalings } from "../../types/artifact";
 import { Stars } from "../../types/stars";
 import ArtifactSubstats from "./ArtifactSubstats.vue";
+import StarSelection from "./StarSelection.vue";
+import StatValue from "./StatValue.vue";
 
 const props = defineProps<{
   type: ArtifactType;
@@ -132,7 +119,6 @@ const mainStatValue = computed(
 
 <style scoped>
 .artifact-container {
-  border: black solid 1px;
   display: flex;
   flex-flow: column nowrap;
 }
@@ -140,34 +126,26 @@ const mainStatValue = computed(
 .artifact-selection {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0;
-  padding-bottom: 0;
 }
 
 .artifact-selection * {
   font-size: xx-large;
   border: none;
   background-color: unset;
-  padding: 4px;
+  margin: 0.25em;
   font-family: sans-serif;
-}
-
-.artifact-selection *:last-child {
-  width: 3.5em;
 }
 
 .artifact-selection > select > option {
   font-size: medium;
 }
 
-.substat-container * {
-  margin: 4px;
-}
-
 .artifact-options {
-  margin: 4px;
   display: inline-flex;
   flex-flow: row wrap;
   justify-content: space-between;
+}
+.artifact-options .inset {
+  margin-left: 0.25em;
 }
 </style>

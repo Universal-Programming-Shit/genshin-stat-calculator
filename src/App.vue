@@ -15,6 +15,11 @@ import AppMenu from "./AppMenu.vue";
   flex-direction: column;
 }
 
+.app-container > *:not(:first-child) {
+  flex-grow: 1;
+  padding: 0.25em;
+}
+
 @media screen and (orientation: landscape) {
   .app-container {
     flex-direction: row;

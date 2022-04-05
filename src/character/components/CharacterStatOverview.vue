@@ -43,8 +43,8 @@ const ascentionStatValue = computed(
 
 <style scoped>
 tr td {
-  outline: black 1px solid;
-  padding: 10px;
+  border: black 1px solid;
+  padding: 0.5em;
 }
 tr td:last-child {
   width: 3em;
