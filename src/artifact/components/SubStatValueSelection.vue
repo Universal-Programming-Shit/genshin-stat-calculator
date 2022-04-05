@@ -2,7 +2,7 @@
   <select
     v-model="selectedIndex"
     class="sub-stat-value-selection"
-    @input="changeRolls(availableRollsList[$event.target.value])"
+    @input="changeRollsHandler"
   >
     <option
       v-for="(roll, i) in availableRollsList"
@@ -22,6 +22,7 @@
 import { computed, ref, watch } from "vue";
 import add from "../../util/add";
 import getElem from "../../util/getElem";
+import {Stats} from "../../types/stats";
 
 const props = defineProps<{
   modelValue: number[];
@@ -33,6 +34,11 @@ const props = defineProps<{
 const emits = defineEmits<{
   (e: "update:modelValue", value: number[]): void;
 }>();
+
+function changeRollsHandler(ev: Event){
+  const value = (ev.target as {value: number } | null)?.value
+  if (value) changeRolls(availableRollsList.value[value]);
+}
 
 const changeRolls = (rolls: number[]) => emits("update:modelValue", rolls);
 

@@ -2,7 +2,7 @@
   <select
     :value="modelValue"
     class="select"
-    @change="changeType($event.target.value)"
+    @change="changeTypeHandler"
   >
     <option
       v-for="availableStat of substats"
@@ -25,6 +25,11 @@ const props = defineProps<{
   substats: Stats[];
 }>();
 const emits = defineEmits<{ (e: "update:modelValue", stat: Stats): void }>();
+
+function changeTypeHandler(ev: Event){
+  const value = (ev.target as {value: Stats } | null)?.value
+  if (value) changeType(value);
+}
 
 const changeType = (stat: Stats) => emits("update:modelValue", stat);
 
