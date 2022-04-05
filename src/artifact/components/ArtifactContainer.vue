@@ -85,7 +85,7 @@ function setLevel() {
 const artifact = ref<Artifact>({
   type: props.type,
   level: 1,
-  stars: Stars.S1,
+  stars: Stars.S5,
   mainStat: props.availableMainStats[0],
   subStats: [],
 });
