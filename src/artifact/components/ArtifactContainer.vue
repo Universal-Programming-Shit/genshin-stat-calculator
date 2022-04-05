@@ -48,6 +48,7 @@
         </div>
       </div>
       <ArtifactSubstats
+        v-model="artifact.subStats"
         class="artifact-options"
         :level="artLevel"
         :stars="artStars"
