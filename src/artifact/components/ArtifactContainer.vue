@@ -63,7 +63,7 @@
 <script setup lang="ts">
 import { ArtifactType } from "../../types/artifactType";
 import { isPercentage, Stats, toString } from "../../types/stats";
-import { computed, defineEmits, defineProps, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { Artifact, mainStatScalings } from "../../types/artifact";
 import { Stars } from "../../types/stars";
 import ArtifactSubstats from "./ArtifactSubstats.vue";

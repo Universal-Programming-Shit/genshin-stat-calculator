@@ -30,7 +30,6 @@ const changeRolls = (rolls: number) =>
 watch(
   props,
   () => {
-    console.log("Rolls", props.maxRolls);
     if (!props.modelValue) {
       changeRolls(Math.min(props.maxRolls, props.modelValue));
     }

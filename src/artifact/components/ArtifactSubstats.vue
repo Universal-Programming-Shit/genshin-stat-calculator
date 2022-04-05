@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
 import SubStatRow from "./SubStatRow.vue";
-import { computed, defineEmits, defineProps, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { ArtifactSubStat } from "../../types/artifact";
 import { Stats } from "../../types/stats";
 import { Stars } from "../../types/stars";
