@@ -41,15 +41,20 @@
 
 <script setup lang="ts">
 import SubStatRow from "./SubStatRow.vue";
-import { computed, defineProps, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { ArtifactSubStat } from "../../types/artifact";
 import { Stats } from "../../types/stats";
 import { Stars } from "../../types/stars";
 
 const props = defineProps<{
+  modelValue: ArtifactSubStat[];
   stars: Stars;
   level: number;
   availableSubStats: Stats[];
+}>();
+
+const emits = defineEmits<{
+  (e: "update:modelValue", value: ArtifactSubStat[]): void;
 }>();
 
 const moreRolls = ref(false);
@@ -64,22 +69,30 @@ function usedRolls(stat: ArtifactSubStat) {
   return stat.rolls.filter((value) => value !== 0).length;
 }
 
-const firstSubstat = ref<ArtifactSubStat>({
-  type: Stats.NONE,
-  rolls: [],
-});
-const secondSubstat = ref<ArtifactSubStat>({
-  type: Stats.NONE,
-  rolls: [],
-});
-const thirdSubstat = ref<ArtifactSubStat>({
-  type: Stats.NONE,
-  rolls: [],
-});
-const forthSubstat = ref<ArtifactSubStat>({
-  type: Stats.NONE,
-  rolls: [],
-});
+const firstSubstat = ref<ArtifactSubStat>(
+  props.modelValue[0] ?? {
+    type: Stats.NONE,
+    rolls: [],
+  }
+);
+const secondSubstat = ref<ArtifactSubStat>(
+  props.modelValue[1] ?? {
+    type: Stats.NONE,
+    rolls: [],
+  }
+);
+const thirdSubstat = ref<ArtifactSubStat>(
+  props.modelValue[2] ?? {
+    type: Stats.NONE,
+    rolls: [],
+  }
+);
+const forthSubstat = ref<ArtifactSubStat>(
+  props.modelValue[3] ?? {
+    type: Stats.NONE,
+    rolls: [],
+  }
+);
 
 watch([firstSubstat, secondSubstat, thirdSubstat, forthSubstat], () => {
   if (
@@ -118,6 +131,12 @@ watch([firstSubstat, secondSubstat, thirdSubstat, forthSubstat], () => {
         stat !== forthSubstat.value.type
     )[0];
   }
+  emits("update:modelValue", [
+    firstSubstat.value,
+    secondSubstat.value,
+    thirdSubstat.value,
+    forthSubstat.value,
+  ]);
 });
 
 const firstRequiredRolls = computed<boolean>(
@@ -197,39 +216,13 @@ const forthAvailableSubstats = computed(() => {
 </script>
 
 <style scoped>
-.artifact-selection * {
-  font-size: xx-large;
-  border: none;
-  background-color: unset;
-  padding: 4px;
-  font-family: sans-serif;
-}
-
-.artifact-selection *:last-child {
-  width: 3.5em;
-}
-
-.artifact-selection > select > option {
-  font-size: medium;
-}
-
-tr td,
-tr th {
-  outline: black 1px solid;
-  padding: 10px;
-}
-
-tr td:last-child {
-  width: 3em;
-}
-
 .substat-container {
   display: inline-flex;
   flex-wrap: wrap;
-  margin: 4px;
+  gap: 0.25em;
 }
 
 .substat-container * {
-  margin: 4px;
+  padding: 0.25em;
 }
 </style>

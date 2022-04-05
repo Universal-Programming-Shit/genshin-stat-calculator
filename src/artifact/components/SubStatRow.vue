@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { isPercentage, Stats } from "../../types/stats";
-import { computed, defineEmits, defineProps, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { ArtifactSubStat, subStatScalings } from "../../types/artifact";
 import { Stars } from "../../types/stars";
 import SubStatTypeSelection from "./SubStatTypeSelection.vue";
