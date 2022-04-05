@@ -6,7 +6,7 @@
     :step="1"
     :min="0"
     :max="maxRolls + modelValue"
-    @input="changeRolls(Number.parseInt($event.target.value, 10))"
+    @input="changeRollsHandler"
   />
 </template>
 <script setup lang="ts">
@@ -18,6 +18,11 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{ (e: "update:modelValue", value: number): void }>();
+
+function changeRollsHandler(ev: Event) {
+  const value = (ev.target as { value: string } | null)?.value;
+  if (value) changeRolls(Number.parseInt(value, 10));
+}
 
 const changeRolls = (rolls: number) =>
   emits("update:modelValue", Math.max(rolls, 0));
