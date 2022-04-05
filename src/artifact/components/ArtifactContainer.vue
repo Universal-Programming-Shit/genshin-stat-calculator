@@ -115,6 +115,13 @@ const maxLevel = computed(() => {
   }
 });
 
+watch(maxLevel, () => {
+  if (maxLevel.value < Number.parseInt(levelModel.value, 10)) {
+    levelModel.value = `${maxLevel.value}`;
+    artifact.value.level = maxLevel.value;
+  }
+});
+
 const isPerc = computed(() => isPercentage(artMainStat.value));
 
 const mainStatValue = computed(
