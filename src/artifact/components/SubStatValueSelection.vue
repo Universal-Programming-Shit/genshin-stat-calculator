@@ -22,7 +22,6 @@
 import { computed, ref, watch } from "vue";
 import add from "../../util/add";
 import getElem from "../../util/getElem";
-import {Stats} from "../../types/stats";
 
 const props = defineProps<{
   modelValue: number[];
@@ -35,8 +34,8 @@ const emits = defineEmits<{
   (e: "update:modelValue", value: number[]): void;
 }>();
 
-function changeRollsHandler(ev: Event){
-  const value = (ev.target as {value: number } | null)?.value
+function changeRollsHandler(ev: Event) {
+  const value = (ev.target as { value: number } | null)?.value;
   if (value) changeRolls(availableRollsList.value[value]);
 }
 

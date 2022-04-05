@@ -19,8 +19,8 @@ const props = defineProps<{
 
 const emits = defineEmits<{ (e: "update:modelValue", value: number): void }>();
 
-function changeRollsHandler(ev: Event){
-  const value = (ev.target as {value: string } | null)?.value
+function changeRollsHandler(ev: Event) {
+  const value = (ev.target as { value: string } | null)?.value;
   if (value) changeRolls(Number.parseInt(value, 10));
 }
 

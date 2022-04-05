@@ -1,9 +1,5 @@
 <template>
-  <select
-    :value="modelValue"
-    class="select"
-    @change="changeTypeHandler"
-  >
+  <select :value="modelValue" class="select" @change="changeTypeHandler">
     <option
       v-for="availableStat of substats"
       :key="availableStat"
@@ -26,8 +22,8 @@ const props = defineProps<{
 }>();
 const emits = defineEmits<{ (e: "update:modelValue", stat: Stats): void }>();
 
-function changeTypeHandler(ev: Event){
-  const value = (ev.target as {value: Stats } | null)?.value
+function changeTypeHandler(ev: Event) {
+  const value = (ev.target as { value: Stats } | null)?.value;
   if (value) changeType(value);
 }
 
